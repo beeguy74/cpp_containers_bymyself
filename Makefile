@@ -1,7 +1,7 @@
-NAME	=		webserv
+NAME	=		test	
 
-FILES	=		main 
-HEADERS =		ft_stack
+FILES	=		test 
+HEADERS =		stack
 
 CXX		=		clang++
 
@@ -9,7 +9,7 @@ SRC_DIR	=		src/
 OBJ_DIR	=		obj/
 INCLUDE_DIR =	include/
 
-FLAGS	= -Wall -Wextra -Werror -I $(INCLUDE_DIR) -g
+FLAGS	= -Wall -Wextra -Werror -I $(INCLUDE_DIR) -g -std=c++98
 
 SRCS 	= $(patsubst %, $(SRC_DIR)%.cpp, $(FILES))
 HDRS	= $(patsubst %, $(INCLUDE_DIR)%.hpp, $(HEADERS))
