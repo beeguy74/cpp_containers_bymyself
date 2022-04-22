@@ -21,7 +21,34 @@ namespace ft
         void push(const value_type& x) { _cont.push_back(x); };
         void pop() { _cont.pop_back(); };
         ~stack(void) {};
+        inline bool Eq(const stack<T, Container>& other) const { return (_cont == other._cont); };
+        inline bool Lt(const stack<T, Container>& other) const { return (_cont < other._cont); };
     };
+
+    template <class T, class Cont>
+    bool operator==(const stack<T, Cont>& lhs, const stack<T, Cont>& rhs){
+        return lhs.Eq(rhs);
+    }
+    template <class T, class Cont>
+    bool operator!=(const stack<T, Cont>& lhs, const stack<T, Cont>& rhs){
+        return !(lhs.Eq(rhs));
+    }
+    template <class T, class Cont>
+    bool operator<(const stack<T, Cont>& lhs, const stack<T, Cont>& rhs){
+        return (lhs.Lt(rhs));
+    }
+    template <class T, class Cont>
+    bool operator>(const stack<T, Cont>& lhs, const stack<T, Cont>& rhs){
+        return (rhs < lhs);
+    }
+    template <class T, class Cont>
+    bool operator<=(const stack<T, Cont>& lhs, const stack<T, Cont>& rhs){
+        return !(rhs < lhs);
+    }
+    template <class T, class Cont>
+    bool operator>=(const stack<T, Cont>& lhs, const stack<T, Cont>& rhs){
+        return !(lhs < rhs);
+    }
 }
     
 #endif
