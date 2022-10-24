@@ -6,32 +6,34 @@
 
 namespace ft
 {
-    template<class T, class A = std::allocator<T> >
-    class vector{
-    public:
-        typedef vector<T, A>                My_v;
-        typedef size_t                      size_type;
-        typedef A                           allocator_type;
-        typedef typename A::ponter          Tptr;
+    template <class T, class Ax = allocator<T>>
+    class vector {
+        typedef vector<T, Ax>   Myt;
+        typedef typename Ax::template rebind<T>::other  A;
+        typedef A   allocator_type;
+        typedef typename A::size_type   size_type;
+        typedef typename A::difference_type difference_type;
+        typedef typename A::pointer         Tptr;
         typedef typename A::const_pointer   Ctptr;
+        typedef Tptr                        pointer;
+        typedef Ctptr                       const_pointer;
         typedef typename A::reference       reference;
         typedef typename A::const_reference const_reference;
         typedef typename A::value_type      value_type;
-        // The container may have an internal need to allocate objects of a different type, 
-        // and tempalte rebind<T>::other::difference_type holds allocator of that type 
-        // https://eel.is/c++draft/allocator.requirements
-        typedef typename A::template rebind<T>::other::difference_type
-            difference_type;
-        typedef Ptrit<value_type, difference_type, Tptr, reference, Tptr, reference>
-            iterator;
-        typedef Ptrit<value_type, difference_type, Ctptr, const_reference, Tptr, reference>
-            const_iterator;
 
-
-    };
-
-    // template<class A>
-    // class vector<bool>;
+    protected:
+        allocator_type  Alval;
+        bool    Buy(size_type N){
+            if (N == 0)
+                return(0);
+            else {
+                First = Alval.allocate(N, (void *)0);
+                Last = First;
+                End = First + N;
+                return (1);
+            }
+        }
+    }
 }
 
 #endif
