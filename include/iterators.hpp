@@ -9,9 +9,11 @@ namespace ft {
     template<class T, class D, class Pt, class Rt>
         struct Bidit : public iterator<bidirectional_iterator_tag,
             T, D, Pt, Rt> {};
+
     template<class T, class D, class Pt, class Rt>
         struct Ranit: public iterator<random_access_iterator_tag,
             T, D, Pt, Rt> {};
+
     struct Outit : public iterator<output_iterator_tag,
         void, void, void, void> {};
     
@@ -20,12 +22,32 @@ namespace ft {
             C X;
             return (X);
         }
+    
     template<class T> inline
         random_access_iterator_tag  Iter_cat(const T*){
             random_access_iterator_tag  X;
             return (X);
         }
     
+    template<class InIt> inline
+        typename iterator_traits<InIt>::difference_type distance(InIt F, InIt L){
+            typename iterator_traits<InIt>::difference_type N = 0;
+            Distance2(F, L, N, Iter_cat(F));
+            return (N)
+        }
+    
+    template<class InIt, class D> inline
+        void Distance(InIt F, InIt L, D &N){
+            Distance2(F, L, N, Iter_cat(F));
+        }
+
+    template<class RanIt, class D> inline
+        void Distance2(RanIt F, RanIt L, D &N, random_access_iterator_tag){
+            N += L - F
+        }
+
+    //Distance2 for input_iterator_tag, forward_iterator_tag, bidirectional_iterator_tag
+
     template<class T, class D, class Pt, class Rt, class Pt2, class Rt2>
         class Ptrit : public iterator<random_access_iterator_tag,
                 T, D, Pt, Rt> {
@@ -33,12 +55,20 @@ namespace ft {
             Ptrit() {}
             explicit Ptrit(Pt P) : current(P) {}
             Ptrit(const Ptrit<T, D, Pt, Rt, Pt2, Rt2> &X) : current(X.base()) {}
-            Pt base() const{
+            Pt  base() const{
                 return (current);
             }
-            Rt operator*() const{
+            Rt  operator*() const{
                 return (*current);
             }
+            Pt  operator->() const{
+                return (&**this);
+            }
+            Myt &operator++(){
+                c++current;
+                return (*this);
+            }
+
         }
 }
 
