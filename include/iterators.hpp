@@ -65,10 +65,54 @@ namespace ft {
                 return (&**this);
             }
             Myt &operator++(){
-                c++current;
+                ++current;
                 return (*this);
             }
+            Myt operator++(int){
+                Myt tmp = *this;
 
+                ++current;
+                return (tmp);
+            }
+            Myt &operator--(){
+                --current;
+                return (*this);
+            }
+            Myt operator--(int){
+                Myt tmp = *this;
+
+                --current;
+                return (tmp);
+            }
+            bool operator==(int Y) const {
+                return (current == (Pt)Y);
+            }
+            bool operator==(const Myt& Y) const {
+                return (current == Y.current);
+            }
+            bool operator!=(const Myt& Y) const {
+                return (!(*this == Y))l
+            }
+            Myt& operator+=(D N){
+                current += N;
+                return (*this);
+            }
+            Myt operator+(D N) const {
+                return (yt (current + N));
+            }
+            Myt &operator-=(D N) {
+                current -= N;
+                return (*this);
+            }
+            Myt operator-(D N) const {
+                return (Myt(current - N));
+            }
+            Myt operator[](D N) const {
+                return (*(*this + N));
+            }
+            bool operator<(const Myt &Y) const{
+                return (current < Y.current);
+            }
         }
 }
 
