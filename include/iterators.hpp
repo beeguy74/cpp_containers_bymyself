@@ -113,7 +113,23 @@ namespace ft {
             bool operator<(const Myt &Y) const{
                 return (current < Y.current);
             }
+            bool operator>(const Myt &Y) const{
+                return (Y < *this);
+            }
+            bool operator<=(const Myt &Y)const{
+                return (!(Y < *this));
+            }
+            bool operator>=(const Myt &Y) const{
+                return (!(*this < Y));
+            }
+        protected:
+            Pt current;
         }
+
+    template<class T, class D, class Pt, class Rt, class Pt2, class Rt2> inline
+    Ptrit<T, D, Pt, Rt, Pt2, Rt2> operator+(D N, const Ptrit<T, D, Pt, Rt, Pt2, Rt2> &Y){
+        return (Y + N);
+    }
 }
 
 #endif /* _ITERATOR_H_ */
