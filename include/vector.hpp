@@ -8,12 +8,22 @@
 
 namespace ft
 {
+    template<class T, class A>
+    class Vector_val {
+        protected:
+        Vector_val(A Al = A()) : Alval(Al) {}
+        typedef typename A::template rebind<T>::other Alty;
+        Alty Alval;
+    }
+
     template <class T, class Ax = allocator<T>>
-    class vector {
-        typedef vector<T, Ax>   Myt;
-        typedef typename Ax::template rebind<T>::other  A;
-        typedef A   allocator_type;
-        typedef typename A::size_type   size_type;
+    class vector : public Vector_val<T, AX> {
+    public:
+        typedef vector<T, Ax>               Myt;
+        typedef Vector<T, Ax>               Mybase;
+        typedef typename Mybase::Alty       A;
+        typedef A                           allocator_type;
+        typedef typename A::size_type       size_type;
         typedef typename A::difference_type difference_type;
         typedef typename A::pointer         Tptr;
         typedef typename A::const_pointer   Ctptr;
@@ -37,6 +47,40 @@ namespace ft
         explicit vector(size_type N) : Mybase(){
             if(Buy(N))
                 Last = Ufill (First, N, T());
+        }
+        vector(size_type N, const T& V) : Mybase() {
+            if (Buy(N))
+                Last = Ufill(First, N, V);
+        }
+        vector(size_type N, const T& V, const A& Al) : Mybase(Al){
+            if (Buy(N))
+                Last = Ufill(First, N, V);
+        }
+        vector(const Myt &X) : Mybase(X.Alval){
+            if (Buy(X.size()))
+                Last = Ucopy(X.begin(), X.end(), First);//Utilyti Ucopy is needed
+        }
+        template<class It>
+        vector(It F, It L) : Mybase(){
+            Construct(F, L, Iter_cat(F));
+        }
+        template<class It>
+        vector(It F, Itl, const A& Al) : Mybase() {
+            Construct(F, L, Iter_cat(F));
+        }
+        template<class It>
+        void Construct(It F, It L, Int_iterator_tag){
+            size_type N = (size_type)F;
+            if (Buy(N))
+                Last = ufill(First, N, (T)L);
+        }
+        template<class It>
+        void Construct(It F, It L, input_iterator_tag){
+            Buy(0);
+            insert(begin(), F, L);
+        }
+        ~vector (){
+            Clear();//Utility Clear is needed
         }
 
     protected:
