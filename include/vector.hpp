@@ -174,7 +174,7 @@ namespace ft
         }
         const_reference at(size_type P) const{
             if (size() <= P)
-                Xran();//TODO:Xran()
+                Xran();
             return (*(begin() + P));
         }
         reference   at(size_type P){
@@ -446,7 +446,35 @@ namespace ft
         void Xran() const{
             throw out_of_range("vector<T> subscript");
         }
+    };
 
+    template<class T, class A> inline
+    bool    operator==(const vector<T, A>& X, const vector<T, A>& Y){
+        return (X.Eq(Y));
+    }
+    template<class T, class A> inline
+    bool    operator!=(const vector<T, A>& X, const vector<T, A>& Y){
+        return (!(X == Y));
+    }
+    template<class T, class A> inline
+    bool    operator<(const vector<T, A>& X, const vector<T, A>& Y){
+        return (X.Lt(Y));
+    }
+    template<class T, class A> inline
+    bool    operator>(const vector<T, A>& X, const vector<T, A>& Y){
+        return (Y < X);
+    }
+    template<class T, class A> inline
+    bool    operator<=(const vector<T, A>& X, const vector<T, A>& Y){
+        return (!(Y < X));
+    }
+    template<class T, class A> inline
+    bool    operator>=(const vector<T, A>& X, const vector<T, A>& Y){
+        return (!(X < Y));
+    }
+    template<class T, class A> inline
+    void    swap(vector<T, A>& X, vector<T, A>& Y){
+        X.swap(Y);
     }
 }
 
