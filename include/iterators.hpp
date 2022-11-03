@@ -28,12 +28,67 @@ namespace ft {
             random_access_iterator_tag  X;
             return (X);
         }
+
+    inline Int_iterator_tag Iter_cat(bool){
+        Int_iterator_tag    X;
+        return (X);
+    }
     
+    inline Int_iterator_tag Iter_cat(char){
+        Int_iterator_tag    X;
+        return (X);
+    }
+
+    inline Int_iterator_tag Iter_cat(signed char){
+        Int_iterator_tag    X;
+        return (X);
+    }
+
+    inline Int_iterator_tag Iter_cat(unsigned char){
+        Int_iterator_tag    X;
+        return (X);
+    }
+
+    inline Int_iterator_tag Iter_cat(wchar_t){
+        Int_iterator_tag    X;
+        return (X);
+    }
+
+    inline Int_iterator_tag Iter_cat(short){
+        Int_iterator_tag    X;
+        return (X);
+    }
+
+    inline Int_iterator_tag Iter_cat(unsigned short){
+        Int_iterator_tag    X;
+        return (X);
+    }
+
+    inline Int_iterator_tag Iter_cat(int){
+        Int_iterator_tag    X;
+        return (X);
+    }
+
+    inline Int_iterator_tag Iter_cat(unsigned int){
+        Int_iterator_tag    X;
+        return (X);
+    }
+
+    inline Int_iterator_tag Iter_cat(long){
+        Int_iterator_tag    X;
+        return (X);
+    }
+
+    inline Int_iterator_tag Iter_cat(unsigned long){
+        Int_iterator_tag    X;
+        return (X);
+    }
+
     template<class InIt> inline
         typename iterator_traits<InIt>::difference_type distance(InIt F, InIt L){
             typename iterator_traits<InIt>::difference_type N = 0;
             Distance2(F, L, N, Iter_cat(F));
-            return (N)
+            return (N);
         }
     
     template<class InIt, class D> inline
@@ -41,16 +96,33 @@ namespace ft {
             Distance2(F, L, N, Iter_cat(F));
         }
 
-    template<class RanIt, class D> inline
-        void Distance2(RanIt F, RanIt L, D &N, random_access_iterator_tag){
-            N += L - F
+    template<class InIt, class D> inline
+        void Distance2(InIt F, InIt L, D &N, input_iterator_tag){
+            for (; F != L; +=F)
+                ++N;
         }
 
-    //Distance2 for input_iterator_tag, forward_iterator_tag, bidirectional_iterator_tag
+    template<class InIt, class D> inline
+        void Distance2(InIt F, InIt L, D &N, forward_iterator_tag){
+            for (; F != L; +=F)
+                ++N;
+        }
+
+    template<class InIt, class D> inline
+        void Distance2(InIt F, InIt L, D &N, bidirectional_iterator_tag){
+            for (; F != L; +=F)
+                ++N;
+        }
+
+    template<class RanIt, class D> inline
+        void Distance2(RanIt F, RanIt L, D &N, random_access_iterator_tag){
+            N += L - F;
+        }
 
     template<class T, class D, class Pt, class Rt, class Pt2, class Rt2>
         class Ptrit : public iterator<random_access_iterator_tag,
                 T, D, Pt, Rt> {
+        public:
             typedef Ptrit<T, D, Pt, Rt, Pt2, Rt2>   Myt;
             Ptrit() {}
             explicit Ptrit(Pt P) : current(P) {}
@@ -91,14 +163,14 @@ namespace ft {
                 return (current == Y.current);
             }
             bool operator!=(const Myt& Y) const {
-                return (!(*this == Y))l
+                return (!(*this == Y));
             }
             Myt& operator+=(D N){
                 current += N;
                 return (*this);
             }
             Myt operator+(D N) const {
-                return (yt (current + N));
+                return (Myt (current + N));
             }
             Myt &operator-=(D N) {
                 current -= N;
@@ -124,7 +196,7 @@ namespace ft {
             }
         protected:
             Pt current;
-        }
+        };
 
     template<class T, class D, class Pt, class Rt, class Pt2, class Rt2> inline
     Ptrit<T, D, Pt, Rt, Pt2, Rt2> operator+(D N, const Ptrit<T, D, Pt, Rt, Pt2, Rt2> &Y){

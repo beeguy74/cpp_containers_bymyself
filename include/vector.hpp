@@ -14,13 +14,13 @@ namespace ft
         Vector_val(A Al = A()) : Alval(Al) {}
         typedef typename A::template rebind<T>::other Alty;
         Alty Alval;
-    }
+    };
 
-    template <class T, class Ax = allocator<T>>
-    class vector : public Vector_val<T, AX> {
+    template < class T, class Ax = std::allocator<T> >
+    class vector : public Vector_val<T, Ax> {
     public:
         typedef vector<T, Ax>               Myt;
-        typedef Vector<T, Ax>               Mybase;
+        typedef Vector_val<T, Ax>           Mybase;
         typedef typename Mybase::Alty       A;
         typedef A                           allocator_type;
         typedef typename A::size_type       size_type;
@@ -36,8 +36,8 @@ namespace ft
             Tptr, reference>                iterator;
         typedef Ptrit<value_type, difference_type, Ctptr, const reference,
             Tptr, reference>                const_iterator;
-        typedef reverse_iterator<iterator>  reverse_iterator;
-        typedef reverse_iterator<const_iterator>    const_reverse_iterator;
+        typedef ft::reverse_iterator<iterator>  reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
         vector() : Mybase(){
             Buy(0);
         }
@@ -58,14 +58,14 @@ namespace ft
         }
         vector(const Myt &X) : Mybase(X.Alval){
             if (Buy(X.size()))
-                Last = Ucopy(X.begin(), X.end(), First);//TODO Ucopy
+                Last = Ucopy(X.begin(), X.end(), First);
         }
         template<class It>
         vector(It F, It L) : Mybase(){
             Construct(F, L, Iter_cat(F));
         }
         template<class It>
-        vector(It F, Itl, const A& Al) : Mybase() {
+        vector(It F, It L, const A& Al) : Mybase(Al) {
             Construct(F, L, Iter_cat(F));
         }
         template<class It>
@@ -114,7 +114,7 @@ namespace ft
                 try {
                     Ucopy(begin(), end(), Q);
                 }
-                catch () {
+                catch (...) {
                     Mybase::Alval.deallocate(Q, N);
                     throw;
                 }
@@ -140,7 +140,7 @@ namespace ft
             return (const_iterator(Last));
         }
         reverse_iterator    rbegin(){
-            return (reverse_iterator(end()))
+            return (reverse_iterator(end()));
         }
         const_reverse_iterator  rbegin() const{
             return (const_reverse_iterator(end()));
@@ -208,16 +208,16 @@ namespace ft
         }
         template<class It>
         void    assign(It F, It L){
-            Assign(F L, Iter_cat(F));
+            Assign(F, L, Iter_cat(F));
         }
         template<class It>
-        void    Assign(IT F, It L, Int_iterator_tag){
-            assign((size_type)F, (t)L);
+        void    Assign(It F, It L, Int_iterator_tag){
+            assign((size_type)F, (T)L);
         }
         template<class It>
         void    Assign(It F, It L, input_iterator_tag){
             erase (begin(), end());
-            insert (begin(). F. L);
+            insert (begin(), F, L);
         }
         void    assign(size_type N, const T& X){
             T   Tx = X;
@@ -225,7 +225,7 @@ namespace ft
             insert(begin(), N, Tx);
         }
         iterator insert(iterator P, const T& X){
-            size_type   Off = sizze() == 0 ? 0 : P - begin();
+            size_type   Off = size() == 0 ? 0 : P - begin();
             insert(P, (size_type)1, X);
             return (begin() + Off);
         }
@@ -250,14 +250,14 @@ namespace ft
                     Q = Ufill(Q, M, Tx);
                     Ucopy(P, end(), Q);
                 }
-                catch () {
+                catch (...) {
                     Destroy(S, Q);
                     Mybase::Alval.deallocate(S, N);
                     throw;
                 }
                 if (First != 0){
                     Destroy(First, Last);
-                    Mybase::Alval.dealocate(First, End - First);
+                    Mybase::Alval.deallocate(First, End - First);
                 }
                 End = S + N;
                 Last = S + size() + M;
@@ -268,12 +268,12 @@ namespace ft
                 try {
                     Ufill(Last, M - (end() - P), Tx);
                 }
-                catch() {
+                catch(...) {
                     Destroy(P.base() + M, Last + M);
                     throw;
                 }
                 Last += M;
-                fill(P, end() - M, Tx)
+                fill(P, end() - M, Tx);
             }
             else {
                 iterator Oend = end();
@@ -309,7 +309,7 @@ namespace ft
                 ? 0
                 : N + N / 2;
                 if (N < size() + M)
-                    N = isze() + M;
+                    N = size() + M;
                 pointer S = Mybase::Alval.allocate(N, (void *)0);
                 pointer Q;
                 try {
@@ -317,7 +317,7 @@ namespace ft
                     Q = Ucopy(F, L, Q);
                     Ucopy(P, end(), Q);
                 }
-                catch (){
+                catch (...){
                     Destroy(S, Q);
                     Mybase::Alval.deallocate(S, N);
                     throw;
@@ -338,7 +338,7 @@ namespace ft
                 try {
                     Ucopy(Mid, L, Last);
                 }
-                catch () {
+                catch (...) {
                     Destroy (P.base() + M, Last + M);
                     throw;
                 }
@@ -354,7 +354,7 @@ namespace ft
         }
         iterator    erase(iterator P){
             copy(P + 1, end(), P);
-            Destroy(Lastr - 1, Last);
+            Destroy(Last - 1, Last);
             --Last;
             return (P);
         }
@@ -422,7 +422,7 @@ namespace ft
                 for (; F !=L; ++Q, ++F)
                     Mybase::Alval.construct(Q, *F);
             }
-            catch (){
+            catch (...){
                 Destroy(Qs, Q);
                 throw;
             }
@@ -434,17 +434,17 @@ namespace ft
                 for (; 0 < N; --N, ++Q){
                     Mybase::Alval.construct(Q,X);
                 }
-            } catch () {
+            } catch (...) {
                 Destroy(Qs, Q);
                 throw;
             }
             return (Q);
         }
         void Xlen() const{
-            throw length_error("vector<T> too long, Sempai!");
+            throw std::length_error("vector<T> too long, Sempai!");
         }
         void Xran() const{
-            throw out_of_range("vector<T> subscript");
+            throw std::out_of_range("vector<T> subscript");
         }
     };
 

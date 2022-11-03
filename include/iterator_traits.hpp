@@ -38,7 +38,7 @@ namespace ft
         typedef const T&                                reference;
     };
 
-    template<class C, class T, class Dist = ptrdiff_t, class Pt = T*, class Rt = T&>
+    template<class C, class T, class Dist = std::ptrdiff_t, class Pt = T*, class Rt = T&>
     struct iterator {
         typedef C       iterator_category;
         typedef T       value_type;
