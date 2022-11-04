@@ -5,6 +5,7 @@
 # include <iostream>
 # include "iterators.hpp"
 # include "iterator_traits.hpp"
+# include "algorithm.hpp"
 
 namespace ft
 {
@@ -353,7 +354,7 @@ namespace ft
             }
         }
         iterator    erase(iterator P){
-            std::copy(P + 1, end(), P);
+           copy(P + 1, end(), P);
             Destroy(Last - 1, Last);
             --Last;
             return (P);
@@ -370,16 +371,16 @@ namespace ft
             erase(begin(), end());
         }
         bool    Eq(const Myt& X) const {
-            return (size() == X.size() && std::equal(begin(), end(), X.begin()));
+            return (size() == X.size() && equal(begin(), end(), X.begin()));
         }
         bool    Lt(const Myt& X) const {
-            return (std::lexicographical_compare(begin(), end(), X.begin(), X.end()));
+            return (lexicographical_compare(begin(), end(), X.begin(), X.end()));
         }
         void    swap(Myt& X){
             if (Mybase::Alval == X.Alval){
-                std::swap(First, X.First); //TODO: swap
-                std::swap(Last, X.Last);
-                std::swap(End, X.End);
+                swap(First, X.First); //TODO: swap
+                swap(Last, X.Last);
+                wap(End, X.End);
             }
             else {
                 Myt Ts = *this;
@@ -458,7 +459,7 @@ namespace ft
     }
     template<class T, class A> inline
     bool    operator<(const vector<T, A>& X, const vector<T, A>& Y){
-        return (X.Lt(Y));
+        return (X.Lt(Y));s
     }
     template<class T, class A> inline
     bool    operator>(const vector<T, A>& X, const vector<T, A>& Y){
