@@ -98,19 +98,19 @@ namespace ft {
 
     template<class InIt, class D> inline
         void Distance2(InIt F, InIt L, D &N, input_iterator_tag){
-            for (; F != L; +=F)
+            for (; F != L; ++F)
                 ++N;
         }
 
     template<class InIt, class D> inline
         void Distance2(InIt F, InIt L, D &N, forward_iterator_tag){
-            for (; F != L; +=F)
+            for (; F != L; ++F)
                 ++N;
         }
 
     template<class InIt, class D> inline
         void Distance2(InIt F, InIt L, D &N, bidirectional_iterator_tag){
-            for (; F != L; +=F)
+            for (; F != L; ++F)
                 ++N;
         }
 
@@ -193,6 +193,9 @@ namespace ft {
             }
             bool operator>=(const Myt &Y) const{
                 return (!(*this < Y));
+            }
+            D   operator-(const Myt& Y) const{
+                return (current - Y.current);
             }
         protected:
             Pt current;

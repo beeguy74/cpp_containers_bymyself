@@ -353,7 +353,7 @@ namespace ft
             }
         }
         iterator    erase(iterator P){
-            copy(P + 1, end(), P);
+            std::copy(P + 1, end(), P);
             Destroy(Last - 1, Last);
             --Last;
             return (P);
@@ -370,10 +370,10 @@ namespace ft
             erase(begin(), end());
         }
         bool    Eq(const Myt& X) const {
-            return (size() == X.size() && equal(begin(), end(), X.begin()));
+            return (size() == X.size() && std::equal(begin(), end(), X.begin()));
         }
         bool    Lt(const Myt& X) const {
-            return (lexicographical_compare(begin(), end(), X.begin(), X.end()));
+            return (std::lexicographical_compare(begin(), end(), X.begin(), X.end()));
         }
         void    swap(Myt& X){
             if (Mybase::Alval == X.Alval){
