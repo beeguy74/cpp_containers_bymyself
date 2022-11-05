@@ -459,7 +459,7 @@ namespace ft
     }
     template<class T, class A> inline
     bool    operator<(const vector<T, A>& X, const vector<T, A>& Y){
-        return (X.Lt(Y));s
+        return (X.Lt(Y));
     }
     template<class T, class A> inline
     bool    operator>(const vector<T, A>& X, const vector<T, A>& Y){

@@ -2,6 +2,7 @@
 #include <string>
 #include "stack.hpp"
 #include <stack>
+#include <vector>
 
 int main(int argc, char** argv) {
 	if (argc != 2)
@@ -10,10 +11,25 @@ int main(int argc, char** argv) {
 		std::cerr << "Provide a some_data please" << std::endl;
 		return 1;
 	}
+    std::cout << "\t" << "My vector" << "\t" << "Std vector" << std::endl;
+
     std::string data = argv[1];
+    ft::vector<char>    my_vec;
+    std::vector<char>   std_vec;
+
+    for (unsigned long i=0; i < data.length(); ++i){
+        my_vec.push_back(data[i]);
+        std_vec.push_back(data[i]);
+    }
+    while (!my_vec.empty()) {
+        std::cout << "\t" << (my_vec.back()) << "\t\t" << (std_vec.back()) << std::endl;
+        my_vec.pop_back();
+        std_vec.pop_back();
+    }
     ft::stack<char>     my_stack;
     ft::stack<char>      rhs;
     std::stack<char>    std_stack;
+    std::cout << "\t" << "My stack" << "\t" << "Std stack" << std::endl;
     for (unsigned long i=0; i < data.length(); ++i){
         my_stack.push(data[i]);
         rhs.push(data[i]);

@@ -5,14 +5,14 @@
 # include "utility.hpp"
 
 namespace ft {
-    template    <class inIt, class OutIt> inline
+    template    <class InIt, class OutIt> inline
     OutIt   copy(InIt F, InIt L, OutIt X){
         for (; F != L; ++X, ++F)
             *X = *F;
         return (X);
     }
     template<class BidIt1, class BidIt2> inline
-    BidIt2 copy_backward(BidIt1 F, InIt1 L, InIt2 X){
+    BidIt2 copy_backward(BidIt1 F, BidIt1 L, BidIt2 X){
         while (F != L)
             *--X = *--L;
         return (X);
@@ -58,7 +58,7 @@ namespace ft {
     }
     //TODO:max, min
     template<class InIt1, class InIt2> inline
-    pair<InIt1, InIt2> mismatch(inIt1 F, InIt1 L, InIt2 X){
+    pair<InIt1, InIt2> mismatch(InIt1 F, InIt1 L, InIt2 X){
         for(; F != L && *F == *X; ++F, ++X)
             ;
         return (pair<InIt1, InIt2>(F, X));
