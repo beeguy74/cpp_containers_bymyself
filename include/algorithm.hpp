@@ -17,10 +17,20 @@ namespace ft {
             *--X = *--L;
         return (X);
     }
-    template<class InIt1, class InIt2> inline
-    bool equal(InIt1 F, InIt1 L, InIt2 X){
-        return (mismatch(F, L, X).first == L);  //TODO: mismatch
-    }
+    // template<class InIt1, class InIt2> inline
+    // bool equal(InIt1 F, InIt1 L, InIt2 X){
+    //     return (mismatch(F, L, X).first == L);  //TODO: mismatch
+    // }
+    template <class InputIterator1, class InputIterator2>
+	bool equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
+	{
+		while (first1 != last1)
+		{
+			if (*first1++ != *first2++)
+				return false;
+		}
+		return true;
+	}
     template<class InIt1, class InIt2, class Pr> inline
     bool equal(InIt1 F, InIt1 L, InIt2 X, Pr P){
         return (mismatch(F, L, X, P).first == L);
