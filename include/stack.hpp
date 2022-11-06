@@ -13,7 +13,8 @@ namespace ft
         typedef typename Container::value_type value_type;
         typedef typename Container::size_type size_type;
         // explicit make constructor closed to implicit conversions
-        explicit stack(const container_type& cont = container_type()) : _cont(cont) {};
+        explicit stack(const Container& cont) : _cont(cont) {};
+        stack() : _cont() {}
         bool empty() const { return _cont.empty(); };
         size_type size() const { return _cont.empty(); };
         value_type& top() { return _cont.back(); };

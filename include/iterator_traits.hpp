@@ -14,8 +14,8 @@ namespace ft
     template<class It>
     struct iterator_traits {
         typedef typename It::iterator_category  iterator_category;
-        typedef typename It::value_type          value_type;
-        typedef typename It::difference_type       difference_type;
+        typedef typename It::value_type         value_type;
+        typedef typename It::difference_type    difference_type;
         typedef typename It::pointer            pointer;
         typedef typename It::reference          reference;
     };
