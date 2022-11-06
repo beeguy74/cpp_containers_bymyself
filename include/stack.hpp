@@ -6,9 +6,10 @@ namespace ft
 {
     template <class T, class Container = ft::vector<T> >
     class stack {
-    protected:
-        Container _cont;
+    // protected:
+    //     Container _cont;
     public:
+        Container _cont;
         typedef Container container_type;
         typedef typename Container::value_type value_type;
         typedef typename Container::size_type size_type;
@@ -22,18 +23,29 @@ namespace ft
         void push(const value_type& x) { _cont.push_back(x); };
         void pop() { _cont.pop_back(); };
         ~stack(void) {};
+        // Container   base() const{ return (this._cont); }
         inline bool Eq(const stack<T, Container>& other) const { return (_cont == other._cont); };
         inline bool Lt(const stack<T, Container>& other) const { return (_cont < other._cont); };
     };
 
-    template <class T, class Cont>
-    bool operator==(const stack<T, Cont>& lhs, const stack<T, Cont>& rhs){
-        return lhs.Eq(rhs);
-    }
-    template <class T, class Cont>
-    bool operator!=(const stack<T, Cont>& lhs, const stack<T, Cont>& rhs){
-        return !(lhs.Eq(rhs));
-    }
+    // template <class T, class Cont>
+    // bool operator==(const stack<T, Cont>& lhs, const stack<T, Cont>& rhs){
+    //     return lhs.Eq(rhs);
+    // }
+    template <class T, class Alloc>
+	bool				operator==(const stack<T,Alloc>& lhs, const stack<T,Alloc>& rhs)
+	{
+		return lhs.size() == rhs.size() && ft::equal(lhs._cont.begin(), lhs._cont.end(), rhs._cont.begin());
+	};
+    template <class T, class Alloc>
+	bool				operator!=(const stack<T,Alloc>& lhs, const stack<T,Alloc>& rhs)
+	{
+		return lhs.size() != rhs.size() || !ft::equal(lhs._cont.begin(), lhs._cont.end(), rhs._cont.begin());
+	};
+    // template <class T, class Cont>
+    // bool operator!=(const stack<T, Cont>& lhs, const stack<T, Cont>& rhs){
+    //     return !(lhs.Eq(rhs));
+    // }
     template <class T, class Cont>
     bool operator<(const stack<T, Cont>& lhs, const stack<T, Cont>& rhs){
         return (lhs.Lt(rhs));
