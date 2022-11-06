@@ -131,7 +131,7 @@ namespace ft {
                 return (current);
             }
             Rt  operator*() const{
-                return (*current);
+                return ((Rt)*current);
             }
             Pt  operator->() const{
                 return (&**this);
