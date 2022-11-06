@@ -370,7 +370,7 @@ namespace ft
         void    clear(){
             erase(begin(), end());
         }
-        bool    Eq(const Myt& X) const {
+        bool    Eq(Myt& X) {
             return (size() == X.size() && equal(begin(), end(), X.begin()));
         }
         bool    Lt(const Myt& X) const {
@@ -450,7 +450,7 @@ namespace ft
     };
 
     template<class T, class A> inline
-    bool    operator==(const vector<T, A>& X, const vector<T, A>& Y){
+    bool    operator==(vector<T, A>& X, vector<T, A>& Y){
         return (X.Eq(Y));
     }
     template<class T, class A> inline
