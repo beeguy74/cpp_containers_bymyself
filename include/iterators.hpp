@@ -125,7 +125,7 @@ namespace ft {
         public:
             typedef Ptrit<T, D, Pt, Rt, Pt2, Rt2>   Myt;
             Ptrit() {}
-            explicit Ptrit(Pt P) : current(P) {}
+            Ptrit(Pt P) : current(P) {}
             Ptrit(const Ptrit<T, D, Pt, Rt, Pt2, Rt2> &X) : current(X.base()) {}
             Pt  base() const{
                 return (current);

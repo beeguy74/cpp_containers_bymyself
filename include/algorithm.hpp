@@ -4,6 +4,23 @@
 # include <memory>
 # include "utility.hpp"
 
+namespace out_ft {
+    //TODO:max, min
+    template<class InIt1, class InIt2> inline
+    ft::pair<InIt1, InIt2> mismatch(InIt1 F, InIt1 L, InIt2 X){
+        for(; F != L && *F == *X; ++F, ++X)
+            ;
+        return (ft::pair<InIt1, InIt2>(F, X));
+    }
+    template<class InIt1, class InIt2, class Pr> inline
+    ft::pair<InIt1, InIt2> mismatch(InIt1 F, InIt1 L, InIt2 X, Pr P){
+        for (; F !=L && P(*F, *X); ++F, ++X)
+            ;
+        return (ft::pair<InIt1, InIt2>(F, X));
+    }
+
+} /* namespace out_ft */
+
 namespace ft {
     template    <class InIt, class OutIt> inline
     OutIt   copy(InIt F, InIt L, OutIt X){
@@ -17,23 +34,13 @@ namespace ft {
             *--X = *--L;
         return (X);
     }
-    // template<class InIt1, class InIt2> inline
-    // bool equal(InIt1 F, InIt1 L, InIt2 X){
-    //     return (mismatch(F, L, X).first == L);  //TODO: mismatch
-    // }
-    template <class InputIterator1, class InputIterator2>
-	bool equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
-	{
-		while (first1 != last1)
-		{
-			if (*first1++ != *first2++)
-				return false;
-		}
-		return true;
-	}
+    template<class InIt1, class InIt2> inline
+    bool equal(InIt1 F, InIt1 L, InIt2 X){
+        return (out_ft::mismatch(F, L, X).first == L);
+    }
     template<class InIt1, class InIt2, class Pr> inline
     bool equal(InIt1 F, InIt1 L, InIt2 X, Pr P){
-        return (mismatch(F, L, X, P).first == L);
+        return (out_ft::mismatch(F, L, X, P).first == L);
     }
     template<class FwdIt, class T> inline
     void fill(FwdIt F, FwdIt L, const T& X){
@@ -66,25 +73,12 @@ namespace ft {
         }
         return (F1 == L1 && F2 != L2);
     }
-    //TODO:max, min
-    template<class InIt1, class InIt2> inline
-    pair<InIt1, InIt2> mismatch(InIt1 F, InIt1 L, InIt2 X){
-        for(; F != L && *F == *X; ++F, ++X)
-            ;
-        return (pair<InIt1, InIt2>(F, X));
-    }
-    template<class InIt1, class InIt2, class Pr> inline
-    pair<InIt1, InIt2> mismatch(InIt1 F, InIt1 L, InIt2 X, Pr P){
-        for (; F !=L && P(*F, *X); ++F, ++X)
-            ;
-        return (pair<InIt1, InIt2>(F, X));
-    }
     template<class T> inline
     void swap(T& X, T& Y){
         T Tmp = X;
         X = Y, Y = Tmp;
     }
-
 } /* namespace ft */
+
 
 # endif  /* _ALGORITHM_H_ */

@@ -73,7 +73,7 @@ namespace ft
         void Construct(It F, It L, Int_iterator_tag){
             size_type N = (size_type)F;
             if (Buy(N))
-                Last = ufill(First, N, (T)L);
+                Last = Ufill(First, N, (T)L);
         }
         template<class It>
         void Construct(It F, It L, input_iterator_tag){
@@ -90,13 +90,13 @@ namespace ft
                 Clear();
             }
             else if (X.size() <= size()){
-                pointer Q = copy(X.begin(), X.end(), First);
+                pointer Q = ft::copy(X.begin(), X.end(), First);
                 Destroy(Q, Last);
                 Last = First + X.size();
             }
             else if (X.size() <= capacity()){
                 const_iterator S = X.begin() + size();
-                copy(X.begin(), S, First);
+                ft::copy(X.begin(), S, First);
                 Last = Ucopy(S, X.end(), Last);
             }
             else {
@@ -104,8 +104,8 @@ namespace ft
                 Mybase::Alval.deallocate(First, End - First);
                 if (Buy(X.size()))
                     Last = Ucopy(X.begin(), X.end(), First);
-            return (*this);
             }
+            return (*this);
         }
         void reserve(size_type N){
             if (max_size() < N)
@@ -274,13 +274,13 @@ namespace ft
                     throw;
                 }
                 Last += M;
-                fill(P, end() - M, Tx);
+                ft::fill(P, end() - M, Tx);
             }
             else {
                 iterator Oend = end();
                 Last = Ucopy(Oend - M, Oend, Last);
-                copy_backward(P, Oend - M, Oend);
-                fill(P, P + M, Tx);
+                ft::copy_backward(P, Oend - M, Oend);
+                ft::fill(P, P + M, Tx);
             }
         }
         template<class It>
@@ -335,7 +335,7 @@ namespace ft
             {
                 Ucopy(P, end(), P.base() + M);
                 It Mid = F;
-                advance(Mid, end() - P);
+                ft::advance(Mid, end() - P);
                 try {
                     Ucopy(Mid, L, Last);
                 }
@@ -344,24 +344,24 @@ namespace ft
                     throw;
                 }
                 Last += M;
-                copy(F, Mid, P);
+                ft::copy(F, Mid, P);
             }
             else if (0 < M){
                 iterator Oend = end();
                 Last = Ucopy(Oend - M, Oend, Last);
-                copy_backward(P, Oend - M, Oend);
-                copy(F, L, P);
+                ft::copy_backward(P, Oend - M, Oend);
+                ft::copy(F, L, P);
             }
         }
         iterator    erase(iterator P){
-           copy(P + 1, end(), P);
+            ft::copy(P + 1, end(), P);
             Destroy(Last - 1, Last);
             --Last;
             return (P);
         }
         iterator    erase(iterator F, iterator L){
             if (F != L){
-                pointer S = copy(L, end(), F.base());
+                pointer S = ft::copy(L, end(), F.base());
                 Destroy(S, Last);
                 Last = S;
             }
@@ -371,16 +371,16 @@ namespace ft
             erase(begin(), end());
         }
         bool    Eq(const Myt& X) const {
-            return (size() == X.size() && equal(begin(), end(), X.begin()));
+            return (size() == X.size() && ft::equal(begin(), end(), X.begin()));
         }
         bool    Lt(const Myt& X) const {
             return (lexicographical_compare(begin(), end(), X.begin(), X.end()));
         }
         void    swap(Myt& X){
             if (Mybase::Alval == X.Alval){
-                swap(First, X.First); //TODO: swap
-                swap(Last, X.Last);
-                wap(End, X.End);
+                ft::swap(First, X.First); //TODO: swap
+                ft::swap(Last, X.Last);
+                ft::swap(End, X.End);
             }
             else {
                 Myt Ts = *this;
