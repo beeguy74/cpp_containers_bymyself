@@ -66,6 +66,11 @@ namespace ft
         reverse_iterator(const reverse_iterator<U> &x) : current(x.base()) {};
         ~reverse_iterator() {};
         RanIt   base() const {return current;};
+
+        operator reverse_iterator<const RanIt>() const {
+            return reverse_iterator<const RanIt>(this);
+        }
+
         Ref                 operator*() const {
             RanIt   Tmp = current;
             return (*--Tmp);
@@ -117,6 +122,9 @@ namespace ft
         Dist Mi(const Myt& Y) const{
             return (Y.current - current);
         }
+        template<class Num>
+        Myt		operator+(Num bias) const{return (Myt(current - bias));}
+		// Myt		operator-(Dist bias) {return current + bias;}
     protected:
         RanIt current;
     };
@@ -154,7 +162,6 @@ namespace ft
     bool    operator>=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y){
         return !(X < Y);
     }
-
 
 }
 

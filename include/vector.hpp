@@ -39,6 +39,10 @@ namespace ft
             Tptr, reference>                const_iterator;
         typedef ft::reverse_iterator<iterator>  reverse_iterator;
         typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
+        operator const_iterator() const{
+            iterator It;
+            return const_iterator(It);
+        }
         vector() : Mybase(){
             Buy(0);
         }
@@ -63,11 +67,11 @@ namespace ft
         }
         template<class It>
         vector(It F, It L) : Mybase(){
-            Construct(F, L, Iter_cat(F));
+            Construct(F, L, ft::Iter_cat(F));
         }
         template<class It>
         vector(It F, It L, const A& Al) : Mybase(Al) {
-            Construct(F, L, Iter_cat(F));
+            Construct(F, L, ft::Iter_cat(F));
         }
         template<class It>
         void Construct(It F, It L, Int_iterator_tag){
@@ -209,7 +213,7 @@ namespace ft
         }
         template<class It>
         void    assign(It F, It L){
-            Assign(F, L, Iter_cat(F));
+            Assign(F, L, ft::Iter_cat(F));
         }
         template<class It>
         void    Assign(It F, It L, Int_iterator_tag){
@@ -285,7 +289,7 @@ namespace ft
         }
         template<class It>
         void    insert(iterator P, It F, It L){
-            Insert(P, F, L, Iter_cat(F));
+            Insert(P, F, L, ft::Iter_cat(F));
         }
         template<class It>
         void    Insert(iterator P, It F, It L, Int_iterator_tag){

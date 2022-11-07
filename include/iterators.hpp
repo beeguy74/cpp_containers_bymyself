@@ -127,6 +127,11 @@ namespace ft {
             Ptrit() {}
             Ptrit(Pt P) : current(P) {}
             Ptrit(const Ptrit<T, D, Pt, Rt, Pt2, Rt2> &X) : current(X.base()) {}
+            template<class c_type, class c_pointer, class c_reference>
+            operator Ptrit<c_type, D, c_pointer, c_reference, Pt2, Rt2>() const{
+                return (c_pointer(current));
+            }
+
             Pt  base() const{
                 return (current);
             }
@@ -179,8 +184,8 @@ namespace ft {
             Myt operator-(D N) const {
                 return (Myt(current - N));
             }
-            Myt operator[](D N) const {
-                return (*(*this + N));
+            Rt operator[](D N) const {
+                return (*(current + N));
             }
             bool operator<(const Myt &Y) const{
                 return (current < Y.current);
@@ -201,9 +206,9 @@ namespace ft {
             Pt current;
         };
 
-    template<class T, class D, class Pt, class Rt, class Pt2, class Rt2> inline
-    Ptrit<T, D, Pt, Rt, Pt2, Rt2> operator+(D N, const Ptrit<T, D, Pt, Rt, Pt2, Rt2> &Y){
-        return (Y + N);
+    template<class T, class D, class Pt, class Rt, class Pt2, class Rt2, class Num> inline
+    Ptrit<T, D, Pt, Rt, Pt2, Rt2> operator+(Num N, const Ptrit<T, D, Pt, Rt, Pt2, Rt2> &Y){
+        return  Ptrit<T, D, Pt, Rt, Pt2, Rt2>(Y + N);
     }
 }
 
