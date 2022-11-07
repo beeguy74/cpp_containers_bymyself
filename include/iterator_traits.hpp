@@ -54,51 +54,107 @@ namespace ft
             typename iterator_traits<RanIt>::difference_type,
             typename iterator_traits<RanIt>::pointer,
             typename iterator_traits<RanIt>::reference> {
+    public:
+        typedef reverse_iterator<RanIt>                             Myt;
         typedef typename iterator_traits<RanIt>::difference_type    Dist;
         typedef typename iterator_traits<RanIt>::pointer            Ptr;
         typedef typename iterator_traits<RanIt>::reference          Ref;
-    public:
         typedef RanIt iterator_type;
         reverse_iterator() : current(NULL) {};
         explicit reverse_iterator(RanIt x) : current(x) {};
         template<class U>
-            reverse_iterator(const reverse_iterator<U> &x) : current(x.base()) {};
+        reverse_iterator(const reverse_iterator<U> &x) : current(x.base()) {};
         ~reverse_iterator() {};
         RanIt   base() const {return current;};
-        Ref                 operator*() const { return *(current); };
+        Ref                 operator*() const {
+            RanIt   Tmp = current;
+            return (*--Tmp);
+        };
         Ptr                 operator->() const {return &**this;};
-        reverse_iterator    &operator++() {
+        Myt&    operator++() {
             --current;
             return *this;
         };
-        reverse_iterator    operator++(int) {
-            reverse_iterator<iterator_type> tmp(*this);
+        Myt     operator++(int) {
+            Myt tmp = *this;
             --current;
             return tmp;
         };
-        reverse_iterator    &operator--() {
-            current++;
+        Myt&    operator--() {
+            ++current;
             return *this;
         };
-        reverse_iterator    operator--(int) {
-            reverse_iterator<iterator_type> tmp(*this);
+        Myt    operator--(int) {
+            Myt tmp = *this;
             ++current;
             return tmp;
         };
-        reverse_iterator    &operator+=(Dist n) {
+        Myt    &operator+=(Dist n) {
             current -= n;
             return *this;
         };
-        reverse_iterator    operator+(Dist n) const { return reverse_iterator(*this) += n; };
-        reverse_iterator    &operator-=(Dist n){
+        Myt operator*(Dist N){
+            current -= N;
+            return *this;
+        }
+        // Myt    operator+(Dist n) const { return reverse_iterator(*this) += n; };
+        Myt&    operator-=(Dist n){
             current += n;
             return *this;
         };
-        reverse_iterator    operator-(Dist n) const { return reverse_iterator(*this) -= n; };
-        Ref                 operator[](Dist n) const {return *(*this + n);};
+        Myt operator-(Dist n) const {
+            return Myt(current + n);
+        };
+        Ref operator[](Dist n) const {
+            return *(*this + n);
+        };
+        bool Eq(const Myt& Y) const{
+            return (current == Y.current);
+        }
+        bool Lt(const Myt& Y) const{
+            return (Y.current < current);
+        }
+        Dist Mi(const Myt& Y) const{
+            return (Y.current - current);
+        }
     protected:
         RanIt current;
     };
+
+    template<class RanIt, class D> inline
+    reverse_iterator<RanIt> operator*(D N, const reverse_iterator<RanIt>& Y){
+        return (Y + N);
+    }
+    template<class RanIt> inline
+    typename reverse_iterator<RanIt>::D operator-(const reverse_iterator<RanIt>& X,
+            const reverse_iterator<RanIt>& Y){
+        return (X.Mi(Y));
+    }
+    template<class RanIt> inline
+    bool    operator==(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y){
+        return (X.Eq(Y));
+    }
+    template<class RanIt> inline
+    bool    operator!=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y){
+        return (!(X == Y));
+    }
+    template<class RanIt> inline
+    bool    operator<(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y){
+        return (X.Lt(Y));
+    }
+    template<class RanIt> inline
+    bool    operator>(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y){
+        return (Y < X);
+    }
+    template<class RanIt> inline
+    bool    operator<=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y){
+        return !(Y < X);
+    }
+    template<class RanIt> inline
+    bool    operator>=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y){
+        return !(X < Y);
+    }
+
 
 }
 
