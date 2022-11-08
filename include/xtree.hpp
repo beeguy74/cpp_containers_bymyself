@@ -260,6 +260,99 @@ namespace ft {
         protected:
             Nodeptr Ptr;
         };
+
+        typedef ft::reverse_iterator<iterator>
+            reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator>
+            const_reverse_iterator;
+        typedef ft::pair<iterator, bool>        Pairib;
+        typedef ft::pair<iterator, iterator>    Pairii;
+        typedef pair<const_iteratpr, const_iterator> Paircc;
+
+        explicit Tree(const key_compare& Parg, const allocator_type& Al)
+            : Mybase(Parg, AL){
+                Init();//TODO:Init
+            }
+        Tree(const value_type *F, const value_type *L, const key_compare& Parg, 
+            const allocator_type& Al) : Mybase(Parg, Al) {
+            Init();
+            insert(F, L); //TODO: insert
+        }
+        ~Tree(){
+            erase(begin(), end());
+            Freenode(Head);
+            Head = 0, Size = 0;
+        }
+        Myt&    operator=(const Myt& X){
+            if (this != &X){
+                erase(begin(), end());
+                comp = X.comp;
+                Copy(X);
+            }
+            return (*this);
+        }
+        iterator begin(){
+            return(iterator(Lmose()));
+        }
+        const_iterator begin() const{
+            return(const_iterator(Lmose()));
+        }
+        iterator end(){
+            return (iterator(Head));
+        }
+        const_iterator end() const{
+            return (const_iterator(Head));
+        }
+        reverse_iterator rbegin(){
+            return (reverse_iterator(end()));
+        }
+        const_reverse_iterator rend() const{
+            return (const_reverse_iterator(begin()));
+        }
+        size_type size() const{
+            return(Size);
+        }
+        size_type max_size() const{
+            return (Alval.max_size());
+        }
+        bool empty() const{
+            return(size() == 0);
+        }
+        allocator_type get_allocator() const{
+            return(Alval);
+        }
+        key_compare key_comp() const{//some shit
+            return (comp):
+        }
+        value_compare value_comp() const{//some shit
+            return (value_compare(key_comp()));
+        }
+        Pairib insert(const value_type& V){
+            Nodeptr X = Root();
+            Nodeptr Y = Head;
+            bool Addleft = true;
+            while(!Isnil(X)){
+                Y = X;
+                Addleft = comp(Kfn()(V), Key(x));//TODO:Kfn
+                X = Addleft ? Left(X) : Right(X);
+            }
+            if (Multi)
+                return (Pairlib(Insert(Addleft, Y, V), true));
+            else {
+                iterator P = iterator(Y);
+                if(Addleft)
+                    ;
+                else if(P == begin())
+                    return (Pairib(Insert(true, Y, V), true));
+                else
+                    --P;
+                if (comp(Key(P.Mynode()), Kfn()(V)))
+                    return(Pairib(Insert(Addleft, Y, V), true));
+                else
+                    return(Pairib(P,false));
+            }
+        }
+        
     }
 
 }
