@@ -352,9 +352,154 @@ namespace ft {
                     return(Pairib(P,false));
             }
         }
-        
-    }
-
+        iterator insert(iterator P, const value_type& V){
+            if (size() == 0)
+                return (Insert(true, Head, V));
+            else if (P == begin()){
+                if (comp(KFN()(V), Key(P.Mynode())))
+                    return (Insert(true, P.Mynode(), V))
+            }
+            else {
+                iterator Pb = P;
+                if (comp(Key((--Pb)P.Mynode(), Kfn()(V)))) //shit?
+                    && comp(Kfn()(V), Key(P.Mynode())){
+                    if (Isnil(Right(Pb.Mynode())))
+                        return(Insert(true, P.Mynode(), V))
+                    else
+                        return(Insert(true, P.Mynode(), V))
+                }
+                return(insert(V).first);
+            }
+        }
+        template<class It>
+        void insert(It F, It L){
+            for (; F != L; ++F)
+                insert(*F);
+        }
+        iterator erase(iterator P){
+            if (Isnil(P.Mynode()))
+                throw out_of_range("tree iterator");
+            Nodeptr X, Xpar;
+            Nodeptr Y = (P++).Mynode();
+            Nodeptr Z = Y;
+            if (Isnil(Left(Y)))
+                X = Right(Y);
+            else if (Isnil(Right(Y)))
+                X = Left(Y);
+            else
+                Y = Min(Right(Y)), X = Right(Y);
+            if (Y == Z){
+                Xpar = Parent(Z);
+                if (!Isnil(X))
+                    Parent(X) = Xpar;
+                if (Root() == Z)
+                    Root() = X;
+                else if(Left(Xpar) == Z)
+                    Left(Xpar) = X;
+                else
+                    Right(Xpar) = X;
+                if (Lmost() != Z)
+                    ;
+                else if (Isnil(Right(Z)))
+                    Lmost() = Xpar;
+                else
+                    Lmost() = Mix(X);
+                if(Rmost() != Z)
+                    ;
+                else if (Isnil(left(Z)))
+                    Rmost() = Xpar;
+                else
+                    Rmost() = Max(X);
+            }
+            else {
+                Parent(Left(Z)) = Y;
+                Left(Y) = Left(Z);
+                if(Y == Right(Z))
+                    Xpar = Y;
+                else{
+                    Xpar = Parent(Y);
+                    if (!Isnil(X))
+                        Parent(X) = Xpar;
+                    Left(Xpar) = X;
+                    Right(Y) = Right(Z);
+                    Parent(Right(Z)) = Y;
+                }
+                if (Root() == Z)
+                    Root() = Y;
+                else if(Left(Parent(Z)) == Z)
+                    Left(Parent(Z)) = Y;
+                else
+                    Right(Parent(Z)) = Y;
+                Parent(Y) = Parent(Z);
+                ft::swap(Color(Y), Color(Z));
+            }
+            if (Color(Z) == Black){
+                for (;X != Root() && Color(X) == Black; Xpar = Parent(X)){
+                    if (X == Left(Xpar)){
+                        Nodeptr W = Right(Xpar);
+                        if(Color(W) == Red){
+                            Color(W) == Black;
+                            Color(Xpar) = Red;
+                            Lrotate(Xpar);
+                            W = Right(Xpar);
+                        }
+                        if (Isnil(W))
+                            X = Xpar; //shit?
+                        else if (Color(Left(W)) == Black && Color(Right(W)) == Black){
+                            Color(w) = Red;
+                            X = Xpar;
+                        }
+                        else {
+                            if (Color(Right(W)) == Black){
+                                Color(Left(W)) = Black;
+                                Color(W) = Red;
+                                Rrotate(W);
+                                W = Right(Xpar);
+                                Color(W) = Color(Xpar);
+                                Color(Xpar) = Black;
+                                Color(Right(W)) = Black;
+                                Lrotate(Xpar);
+                                break;
+                            }
+                        }
+                        else {
+                            Nodeptr W = Left(Xpar);
+                            if(Color(W) == Red){
+                                Color(W) = Black;
+                                Color(Xpar) = Red;
+                                Rrotate(Xpar);
+                                W = Left(Xpar);
+                            }
+                            if (Isnil(W))
+                                X = Xpar; //shit
+                            else if(Color(Right(W)) == Black && Color(Left(W)) == Black){
+                                Color(W) = Red;
+                                X = Xpar;
+                            }
+                            else {
+                                if(Color(Left(W)) == Black){
+                                    Color(Right(W)) = Black;
+                                    Color(W) = Red;
+                                    Lrotate(W);
+                                    W = Left(Xpar);
+                                }
+                                Color(W) = Color(Xpar);
+                                Color(Xpar) = Black;
+                                Color(Left(W)) = Black;
+                                Rrotate(Xpar);
+                                break;
+                            }
+                        }
+                    }
+                }
+                Color(X) = Black;
+            }
+            Destval(&Value(Z));
+            Freenode(Z);
+            if(0 < Size)
+                --Size;
+            return (P);
+        }//shit
 }
 
 #endif /* _XTREE_H_ */
