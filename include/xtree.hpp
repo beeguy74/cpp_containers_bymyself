@@ -33,7 +33,7 @@ namespace ft {
         typedef typename Tr::allocator_type     allocator_type;
         typedef typename Tr::key_compare        key_compare;
         typedef typename allocator_type::template
-            rebind<Nodeptr>::other::pointer     Nodeptr;
+            rebind<Node>::other::pointer        Nodeptr;
         Tree_ptr(const key_compare& Parg, allocator_type Al)
             : Tree_nod<Tr>(Parg, Al) , Alptr(Al) {}
         typename allocator_type::template
@@ -50,7 +50,7 @@ namespace ft {
         allocator_type  Alval;
     };
 
-    template<Class Tr>
+    template<class Tr>
     class Tree : public Tree_val<Tr> {
     public:
         typedef Tree<Tr>        Myt;
@@ -65,24 +65,24 @@ namespace ft {
         typedef typename Tree_nod<Tr>::Node     Node;
         enum Redbl {Red, Black};
         typedef typename allocator_type::template
-            rebind::<Node>::other::pointer      Nodeptr;
+            rebind<Node>::other::pointer      Nodeptr;
         typedef typename allocator_type::template
-            rebind::<Nodeptr>::other::reference Nodepref;
+            rebind<Nodeptr>::other::reference Nodepref;
         typedef typename allocator_type::template
-            rebind::<key_type>::other::const_reference  Keyref;
+            rebind<key_type>::other::const_reference  Keyref;
         typedef typename allocator_type::template
-            rebind::<char>::other::reference    Charref;
+            rebind<char>::other::reference    Charref;
         typedef typename allocator_type::template
-            rebind::<value_type>::other::reference  Vref
+            rebind<value_type>::other::reference  Vref;
 
         static Charref Color(Nodeptr P) {
             return ((Charref)(*P).Color);
         }
-        static CharrefIsnil(Nodeptr P) {
+        static Charref Isnil(Nodeptr P) {
             return((Charref)(*P).Isnil);
         }
         static Keyref Key(Nodeptr P){
-            return (Kfn()(Value(P)));
+            return (std::Kfn()(Value(P)));
         }
         static Nodepref Left(Nodeptr P){
             return((Nodepref)(*P).Left);
@@ -90,7 +90,7 @@ namespace ft {
         static Nodepref Parent(Nodeptr P){
             return ((Nodepref)(*P).Parent);
         }
-        static Nodepref Right(Nodeptr p){
+        static Nodepref Right(Nodeptr P){
             return ((Nodepref)(*P).Right);
         }
         static Vref Value(Nodeptr P){
@@ -101,16 +101,16 @@ namespace ft {
         typedef typename allocator_type::difference_type    Dift;
         typedef Dift    difference_type;
         typedef typename allocator_type::template
-            rebind::<value_type>::other::pointer        Tptr;
+            rebind<value_type>::other::pointer        Tptr;
         typedef typename allocator_type::template
-            rebind::<value_type>::other::const_pointer  Ctptr;
+            rebind<value_type>::other::const_pointer  Ctptr;
         typedef typename allocator_type::template
-            rebind::<value_type>::other::reference      Reft;
+            rebind<value_type>::other::reference      Reft;
         typedef Tptr    pointer;
         typedef Ctptr   const_pointer;
         typedef Reft    reference;
         typedef typename allocator_type::template
-            rebind::<value_type>::other::const_reference    const_reference;
+            rebind<value_type>::other::const_reference    const_reference;
 
         class iterator;
         friend class iterator;
@@ -123,7 +123,7 @@ namespace ft {
             typedef typename Mybase::pointer                pointer;
             typedef typename Mybase::reference              reference;
             iterator() : Ptr(0) {}
-            iterator() : Ptr(P) {}
+            iterator(Nodeptr P) : Ptr(P) {}
             reference operator*() const{
                 return (Value(Ptr));
             }
@@ -137,7 +137,7 @@ namespace ft {
             iterator operator++(int){
                 iterator Tmp = *this;
                 ++*this;
-                return (Tp);
+                return (Tmp);
             }
             iterator operator--(){
                 Dec();
@@ -158,7 +158,7 @@ namespace ft {
                 if (Isnil(Ptr))
                     Ptr = Right(Ptr);
                 else if (!Isnil(Left(Ptr)))
-                    ptr = Max(Left(Ptr)); //TODO: Max
+                    Ptr = Max(Left(Ptr)); //TODO: Max
                 else {
                     Nodeptr P;
                     while (!Isnil(P = Parent(Ptr)) && Ptr == Left(P))
@@ -250,7 +250,7 @@ namespace ft {
                 else {
                     Nodeptr P;
                     while (!Isnil(P = Parent(Ptr)) && Ptr == Right(P))
-                        Ptr = p;
+                        Ptr = P;
                     Ptr = P;
                 }
             }
@@ -267,10 +267,10 @@ namespace ft {
             const_reverse_iterator;
         typedef ft::pair<iterator, bool>        Pairib;
         typedef ft::pair<iterator, iterator>    Pairii;
-        typedef pair<const_iteratpr, const_iterator> Paircc;
+        typedef pair<const_iterator, const_iterator> Paircc;
 
         explicit Tree(const key_compare& Parg, const allocator_type& Al)
-            : Mybase(Parg, AL){
+            : Mybase(Parg, Al){
                 Init();//TODO:Init
             }
         Tree(const value_type *F, const value_type *L, const key_compare& Parg, 
@@ -286,16 +286,16 @@ namespace ft {
         Myt&    operator=(const Myt& X){
             if (this != &X){
                 erase(begin(), end());
-                comp = X.comp;
+                comp = X.comp;//shit
                 Copy(X);
             }
             return (*this);
         }
         iterator begin(){
-            return(iterator(Lmose()));
+            return(iterator(Lmost()));
         }
         const_iterator begin() const{
-            return(const_iterator(Lmose()));
+            return(const_iterator(Lmost()));
         }
         iterator end(){
             return (iterator(Head));
@@ -313,13 +313,13 @@ namespace ft {
             return(Size);
         }
         size_type max_size() const{
-            return (Alval.max_size());
+            return (this->Alval.max_size());
         }
         bool empty() const{
             return(size() == 0);
         }
         allocator_type get_allocator() const{
-            return(Alval);
+            return(this->Alval);
         }
         key_compare key_comp() const{//some shit
             return (comp):
@@ -333,7 +333,7 @@ namespace ft {
             bool Addleft = true;
             while(!Isnil(X)){
                 Y = X;
-                Addleft = comp(Kfn()(V), Key(x));//TODO:Kfn
+                Addleft = comp(Kfn()(V), Key(X));//TODO:Kfn
                 X = Addleft ? Left(X) : Right(X);
             }
             if (Multi)
@@ -356,17 +356,17 @@ namespace ft {
             if (size() == 0)
                 return (Insert(true, Head, V));
             else if (P == begin()){
-                if (comp(KFN()(V), Key(P.Mynode())))
-                    return (Insert(true, P.Mynode(), V))
+                if (comp(Kfn()(V), Key(P.Mynode())))
+                    return (Insert(true, P.Mynode(), V));
             }
             else {
                 iterator Pb = P;
-                if (comp(Key((--Pb)P.Mynode(), Kfn()(V)))) //shit?
+                if (comp(Key(--Pb)P.Mynode(), Kfn()(V)))) //shit?
                     && comp(Kfn()(V), Key(P.Mynode())){
                     if (Isnil(Right(Pb.Mynode())))
-                        return(Insert(true, P.Mynode(), V))
+                        return(Insert(true, P.Mynode(), V));
                     else
-                        return(Insert(true, P.Mynode(), V))
+                        return(Insert(true, P.Mynode(), V));
                 }
                 return(insert(V).first);
             }
@@ -378,7 +378,7 @@ namespace ft {
         }
         iterator erase(iterator P){
             if (Isnil(P.Mynode()))
-                throw out_of_range("tree iterator");
+                throw std::out_of_range("tree iterator");
             Nodeptr X, Xpar;
             Nodeptr Y = (P++).Mynode();
             Nodeptr Z = Y;
@@ -446,7 +446,7 @@ namespace ft {
                         if (Isnil(W))
                             X = Xpar; //shit?
                         else if (Color(Left(W)) == Black && Color(Right(W)) == Black){
-                            Color(w) = Red;
+                            Color(W) = Red;
                             X = Xpar;
                         }
                         else {
@@ -504,7 +504,7 @@ namespace ft {
         iterator erase(iterator F, iterator L){
             if (size() == 0 || F != begin() || L != end()){
                 while (F != L)
-                    erase(F++)
+                    erase(F++);
                 return (F);
             }
             else {
@@ -561,14 +561,14 @@ namespace ft {
             return (iterator(Ubound(Kv)));
         }
 
-        const_iterator upper_bound(const key_type&Kv){
+        const_iterator upper_bound(const key_type&Kv) const{
             return (const_iterator(Lbound(Kv)));
         }
 
-        Pairii equal_range(const ley_type& Kv){
+        Pairii equal_range(const key_type& Kv){
             return (Pairii(lower_bound(Kv), upper_bound(Kv)));
         }
-        Paircc equal_range(constkey_type& Kv) const{
+        Paircc equal_range(const key_type& Kv) const{
             return (Paircc(lower_bound(Kv), upper_bound(Kv)));
         }
         void swap(Myt& X){
@@ -634,14 +634,14 @@ namespace ft {
         void Init(){
             Head = Buynode(0, Black);
             Isnil(Head) = true;
-            Root() = HEad;
+            Root() = Head;
             Lmost() = Head, Rmost() = Head;
             Size = 0;
         }
 
         iterator Insert(bool Addleft, Nodeptr Y, const value_type& V){
             if (max_size() - 1 <= Size)
-                throw length_error("tree mao/set too long");
+                throw std::length_error("tree mao/set too long");
             Nodeptr Z = Buynode(Y, Red);
             Left(Z) = Head, Right(Z) = Head;
             try {
@@ -652,7 +652,7 @@ namespace ft {
                 throw;
             }
             ++Size;
-            if (Y == HEad){
+            if (Y == Head){
                 Root() = Z;
                 Lmost() = Z, Rmost() = Z;
             }
@@ -667,7 +667,7 @@ namespace ft {
                     Rmost () = Z;
             }
             for (Nodeptr X = Z; Color(Parent(X)) == Red;){//shit for
-                if (Parent(x) == Left(Parent(Parent(X)))){
+                if (Parent(X) == Left(Parent(Parent(X)))){
                     Y = Right(Parent(Parent(X)));
                     if (Color(Y) == Red){
                         Color(Parent(X)) = Black;
@@ -680,7 +680,7 @@ namespace ft {
                             X = PArent(X);
                             Lrotate(X);
                         }
-                        Color(Parent(x)) = Black;
+                        Color(Parent(X)) = Black;
                         Color(Parent(Parent(X))) = Red;
                         Rrotate(Parent(Parent(X)));
                     }
@@ -801,28 +801,28 @@ namespace ft {
         }
 
         Nodeptr Buynode(Nodeptr Parg, char Carg){
-            Nodeptr S = Alnod.allocated((void *)0);
-            Alptr.construct(&Left(S, 0));
-            Alptr.construct(&Right(S, 0));
-            Alptr.construct(&Parent(S), Parg);
+            Nodeptr S = this->Alnod.allocated((void *)0);
+            this->Alptr.construct(&Left(S, 0));
+            this->Alptr.construct(&Right(S, 0));
+            this->Alptr.construct(&Parent(S), Parg);
             Color(S) = Carg;
             Isnil(S) = false;
             return (S);
         }
 
         void Consval(Tptr P, const value_type& V){
-            Alval.construct(P, V);
+            this->Alval.construct(P, V);
         }
 
         void Destval(Tptr P){
-            Alval.destroy(P);
+            this->Alval.destroy(P);
         }
 
         void Freenode(Nodeptr S){
-            Alptr.destroy(&Parent(S));
-            Alptr.destroy(&Right(S));
-            Alptr.destroy(&Left(S));
-            Alnode.deallocate(S, 1);
+            this->Alptr.destroy(&Parent(S));
+            this->Alptr.destroy(&Right(S));
+            this->Alptr.destroy(&Left(S));
+            this->Alnod.deallocate(S, 1);
         }
 
         Nodeptr Head;

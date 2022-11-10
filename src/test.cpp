@@ -3,6 +3,7 @@
 #include "stack.hpp"
 #include <stack>
 #include <vector>
+#include "xtree.hpp"
 
 int main(int argc, char** argv) {
 	if (argc != 2)
