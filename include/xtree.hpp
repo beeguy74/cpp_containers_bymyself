@@ -829,8 +829,40 @@ namespace ft {
         size_type Size;
     };
 
-    
+    template<class Tr> inline
+    void swap(Tree<Tr>& X, Tree<Tr>& Y){
+        X.swap(Y);
+    }
 
+    template<class Tr>inline
+    bool operator==(const Tree<Tr>& X, const Tree<Tr>& Y){
+        return (X.size() == Y.size() && equal (X.begin(), X.end(), Y.begin()));
+    }
+
+    template<class Tr> inline
+    bool operator!=(const Tree<Tr>& X, const Tree<Tr>& Y){
+        return (!(X == Y));
+    }
+
+    template<class Tr> inline
+    bool operator<(const Tree<Tr>& X, const Tree<Tr>& Y){
+        return (ft::lexicographical_compare(X.begin(), X.end(), Y.begin(), Y.end(), X.value_comp()));
+    }
+
+    template<class Tr> inline
+    bool operator>(const Tree<Tr>& X, const Tree<Tr>& Y){
+        return (Y < X);
+    }
+
+    template<class Tr> inline
+    bool operator<=(const Tree<Tr>& X, const Tree<Tr>& Y){
+        return (!(Y < X));
+    }
+
+    template<class Tr> inline
+    bool operator>=(const Tree<Tr>& X, const Tree<Tr>& Y){
+        return (!(X < Y));
+    }
 }
 
 #endif /* _XTREE_H_ */
