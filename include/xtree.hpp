@@ -81,9 +81,9 @@ namespace ft {
         static Charref Isnil(Nodeptr P) {
             return((Charref)(*P).Isnil);
         }
-        static Keyref Key(Nodeptr P){
-            return (std::Kfn()(Value(P)));
-        }
+        // static Keyref Key(Nodeptr P){//shit
+        //     return (Kfn()(Value(P)));
+        // }
         static Nodepref Left(Nodeptr P){
             return((Nodepref)(*P).Left);
         }
@@ -286,7 +286,7 @@ namespace ft {
         Myt&    operator=(const Myt& X){
             if (this != &X){
                 erase(begin(), end());
-                comp = X.comp;//shit
+                this->comp = X.comp;//shit
                 Copy(X);
             }
             return (*this);
@@ -322,7 +322,7 @@ namespace ft {
             return(this->Alval);
         }
         key_compare key_comp() const{//some shit
-            return (comp):
+            return (this->comp):
         }
         value_compare value_comp() const{//some shit
             return (value_compare(key_comp()));
@@ -333,7 +333,7 @@ namespace ft {
             bool Addleft = true;
             while(!Isnil(X)){
                 Y = X;
-                Addleft = comp(Kfn()(V), Key(X));//TODO:Kfn
+                Addleft = this->comp(Kfn()(V), Key(X));//TODO:Kfn
                 X = Addleft ? Left(X) : Right(X);
             }
             if (Multi)
@@ -346,7 +346,7 @@ namespace ft {
                     return (Pairib(Insert(true, Y, V), true));
                 else
                     --P;
-                if (comp(Key(P.Mynode()), Kfn()(V)))
+                if (this->comp(Key(P.Mynode()), Kfn()(V)))
                     return(Pairib(Insert(Addleft, Y, V), true));
                 else
                     return(Pairib(P,false));
@@ -356,13 +356,13 @@ namespace ft {
             if (size() == 0)
                 return (Insert(true, Head, V));
             else if (P == begin()){
-                if (comp(Kfn()(V), Key(P.Mynode())))
+                if (this->comp(Kfn()(V), Key(P.Mynode())))
                     return (Insert(true, P.Mynode(), V));
             }
             else {
                 iterator Pb = P;
-                if (comp(Key(--Pb)P.Mynode(), Kfn()(V)))) //shit?
-                    && comp(Kfn()(V), Key(P.Mynode())){
+                if (this->comp(Key(--Pb)P.Mynode(), Kfn()(V)))) //shit?
+                    && this->comp(Kfn()(V), Key(P.Mynode())){
                     if (Isnil(Right(Pb.Mynode())))
                         return(Insert(true, P.Mynode(), V));
                     else
@@ -573,7 +573,7 @@ namespace ft {
         }
         void swap(Myt& X){
             if(get_allocator() == X.get_allocator()){
-                ft::swap(comp, X.comp);
+                ft::swap(this->comp, X.comp);
                 ft::swap(Head, X.Head);
                 ft::swap(Size, X.Size);
             }
