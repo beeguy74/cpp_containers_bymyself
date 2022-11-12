@@ -322,7 +322,7 @@ namespace ft {
             return(this->Alval);
         }
         key_compare key_comp() const{//some shit
-            return (this->comp):
+            return (this->comp);
         }
         value_compare value_comp() const{//some shit
             return (value_compare(key_comp()));
@@ -333,10 +333,10 @@ namespace ft {
             bool Addleft = true;
             while(!Isnil(X)){
                 Y = X;
-                Addleft = this->comp(Kfn()(V), Key(X));//TODO:Kfn
+                Addleft = this->comp(Tr::Kfn()(V), Key(X));//TODO:Kfn
                 X = Addleft ? Left(X) : Right(X);
             }
-            if (Multi)
+            if (Tr::Multi)
                 return (Pairlib(Insert(Addleft, Y, V), true));
             else {
                 iterator P = iterator(Y);
@@ -346,7 +346,7 @@ namespace ft {
                     return (Pairib(Insert(true, Y, V), true));
                 else
                     --P;
-                if (this->comp(Key(P.Mynode()), Kfn()(V)))
+                if (this->comp(Key(P.Mynode()), Tr::Kfn()(V)))
                     return(Pairib(Insert(Addleft, Y, V), true));
                 else
                     return(Pairib(P,false));
@@ -356,12 +356,12 @@ namespace ft {
             if (size() == 0)
                 return (Insert(true, Head, V));
             else if (P == begin()){
-                if (this->comp(Kfn()(V), Key(P.Mynode())))
+                if (this->comp(Tr::Kfn()(V), Key(P.Mynode())))
                     return (Insert(true, P.Mynode(), V));
             }
             else {
                 iterator Pb = P;
-                if (this->comp(Key(--Pb)P.Mynode(), Kfn()(V)))) //shit?
+                if (this->comp(Key(--Pb)P.Mynode(), Tr::Kfn()(V))) //shit?
                     && this->comp(Kfn()(V), Key(P.Mynode())){
                     if (Isnil(Right(Pb.Mynode())))
                         return(Insert(true, P.Mynode(), V));
