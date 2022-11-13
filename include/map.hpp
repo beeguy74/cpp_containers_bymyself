@@ -62,20 +62,20 @@ namespace ft{
         template<class It>
         map(It F, It L) : Mybase(key_compare(), allocator_type()){
             for(;F != L; ++F)
-                insert(*F);
+                this->insert(*F);
         }
         template<class It>
         map(It F, It L, const key_compare& Pred) : Mybase(Pred, allocator_type()){
             for(;F != L; ++F)
-                insert(*F);
+                this->insert(*F);
         }
         template<class It>
         map(It F, It L, const key_compare& Pred, const allocator_type& Al) : Mybase(Pred, Al){
             for(;F != L; ++F)
-                insert(*F);
+                this->insert(*F);
         }
         mapped_type& operator[](const key_type& Kv){
-            iterator P = insert(value_type(Kv, mapped_type())).first;
+            iterator P = this->insert(value_type(Kv, mapped_type())).first;
             return((*P).second);
         }
     }; //class map;
