@@ -21,7 +21,7 @@ namespace ft{
             bool operator()(const value_type& X, const value_type& Y) const{
                 return (comp(X.first, Y.first));
             }
-            value_compare (key_compare Pred) : comp(Pred){}
+            value_compare (key_compare& Pred) : comp(Pred){}
         protected:
             key_compare comp;
         };

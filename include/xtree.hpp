@@ -2,12 +2,13 @@
 # define _XTREE_H_
 
 # include "iterators.hpp"
+# include "algorithm.hpp"
 
 namespace ft {
     template<class Tr>
     class Tree_nod : public Tr {
     protected:
-        typedef typename Tr::alloctor_type  allocator_type;
+        typedef typename Tr::allocator_type  allocator_type;
         typedef typename Tr::key_compare    key_compare;
         typedef typename Tr::value_type     value_type;
         typedef typename allocator_type::template 
@@ -81,9 +82,9 @@ namespace ft {
         static Charref Isnil(Nodeptr P) {
             return((Charref)(*P).Isnil);
         }
-        // static Keyref Key(Nodeptr P){//shit
-        //     return (Kfn()(Value(P)));
-        // }
+        static Keyref Key(Nodeptr P){//shit
+            return (Tr::Kfn()(Value(P)));
+        }
         static Nodepref Left(Nodeptr P){
             return((Nodepref)(*P).Left);
         }
@@ -359,10 +360,13 @@ namespace ft {
                 if (this->comp(Tr::Kfn()(V), Key(P.Mynode())))
                     return (Insert(true, P.Mynode(), V));
             }
+            else if (P == end()){
+                if (this->comp(Key(Rmost()), Tr::Kfn()(V)))
+                    return(Insert(false, Rmost(), V));
+            }
             else {
                 iterator Pb = P;
-                if (this->comp(Key(--Pb)P.Mynode(), Tr::Kfn()(V))) //shit?
-                    && this->comp(Kfn()(V), Key(P.Mynode())){
+                if (this->comp(Key((--Pb).Mynode()), Tr::Kfn()(V)) && this->comp(Tr::Kfn()(V), Key(P.Mynode()))){
                     if (Isnil(Right(Pb.Mynode())))
                         return(Insert(true, P.Mynode(), V));
                     else
@@ -431,7 +435,7 @@ namespace ft {
                 else
                     Right(Parent(Z)) = Y;
                 Parent(Y) = Parent(Z);
-                ft::swap(Color(Y), Color(Z));
+                swap(Color(Y), Color(Z));
             }
             if (Color(Z) == Black){
                 for (;X != Root() && Color(X) == Black; Xpar = Parent(X)){
@@ -449,18 +453,16 @@ namespace ft {
                             Color(W) = Red;
                             X = Xpar;
                         }
-                        else {
-                            if (Color(Right(W)) == Black){
-                                Color(Left(W)) = Black;
-                                Color(W) = Red;
-                                Rrotate(W);
-                                W = Right(Xpar);
-                                Color(W) = Color(Xpar);
-                                Color(Xpar) = Black;
-                                Color(Right(W)) = Black;
-                                Lrotate(Xpar);
-                                break;
-                            }
+                        else if (Color(Right(W)) == Black){
+                            Color(Left(W)) = Black;
+                            Color(W) = Red;
+                            Rrotate(W);
+                            W = Right(Xpar);
+                            Color(W) = Color(Xpar);
+                            Color(Xpar) = Black;
+                            Color(Right(W)) = Black;
+                            Lrotate(Xpar);
+                            break;
                         }
                         else {
                             Nodeptr W = Left(Xpar);
@@ -573,9 +575,9 @@ namespace ft {
         }
         void swap(Myt& X){
             if(get_allocator() == X.get_allocator()){
-                ft::swap(this->comp, X.comp);
-                ft::swap(Head, X.Head);
-                ft::swap(Size, X.Size);
+                swap(this->comp, X.comp);
+                swap(Head, X.Head);
+                swap(Size, X.Size);
             }
             else {
                 Myt Ts = *this;
