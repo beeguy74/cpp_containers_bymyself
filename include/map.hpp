@@ -1,7 +1,7 @@
 #ifndef _MAP_H_
 # define _MAP_H_
 
-# include "xtree.hpp"A
+# include "xtree.hpp"
 # include "utility.hpp"
 
 namespace ft{
@@ -15,8 +15,8 @@ namespace ft{
                         allocator_type;
         enum {Multi = Mfl};
         Tmap_traits(Pr Parg) : comp(Parg) {}
-        class value_compare : public binary function<value_type, value_type, bool> {
-            friend class Tmap_trits<K, T, Pr, Ax, Mfl>;
+        class value_compare : public std::binary_function<value_type, value_type, bool> {
+            friend class Tmap_traits<K, T, Pr, Ax, Mfl>;
         public:
             bool operator()(const value_type& X, const value_type& Y) const{
                 return (comp(X.first, Y.first));
@@ -33,7 +33,7 @@ namespace ft{
         };
 
         Pr  comp;
-    } //class Tmap_traits;
+    }; //class Tmap_traits;
 
     template<class K, class T, class Pr = std::less<K>, class A = std::allocator<pair<const K, T> > >
     class map : public Tree<Tmap_traits<K, T, Pr, A, false> >  {
@@ -57,26 +57,28 @@ namespace ft{
         typedef typename Mybase::reverse_iterator   reverse_iterator;
         typedef typename Mybase::const_reverse_iterator const_reverse_iterator;
         typedef typename Mybase::value_type     value_type;
-        map() : Myabse(key_compare(), allocator_type()) {}
+        map() : Mybase(key_compare(), allocator_type()) {}
         explicit map(const key_compare& Pred, const allocator_type& Al) : Mybase(Pred, Al) {}
-        template<class it>
+        template<class It>
         map(It F, It L) : Mybase(key_compare(), allocator_type()){
-            for(;It F != L; ++F)
+            for(;F != L; ++F)
                 insert(*F);
         }
+        template<class It>
         map(It F, It L, const key_compare& Pred) : Mybase(Pred, allocator_type()){
-            for(;It F != L; ++F)
+            for(;F != L; ++F)
                 insert(*F);
         }
+        template<class It>
         map(It F, It L, const key_compare& Pred, const allocator_type& Al) : Mybase(Pred, Al){
-            for(;It F != L; ++F)
+            for(;F != L; ++F)
                 insert(*F);
         }
         mapped_type& operator[](const key_type& Kv){
             iterator P = insert(value_type(Kv, mapped_type())).first;
             return((*P).second);
         }
-    } //class map;
+    }; //class map;
 
 }
 
