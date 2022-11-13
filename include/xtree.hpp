@@ -118,7 +118,7 @@ namespace ft {
         class iterator : public Bidit<value_type, Dift, Tptr, Reft> {
         public:
             typedef Bidit<value_type, Dift, Tptr, Reft>     Mybase;
-            typedef typename Mybase::iterator_categoty      iterator_category;
+            typedef typename Mybase::iterator_category      iterator_category;
             typedef typename Mybase::value_type             value_type;
             typedef typename Mybase::difference_type        difference_type;
             typedef typename Mybase::pointer                pointer;
@@ -710,7 +710,7 @@ namespace ft {
             return (iterator(Z));
         }
 
-        Nodeptr Lboud(const key_type& Kv) const{
+        Nodeptr Lbound(const key_type& Kv) const{
             Nodeptr X = Root();
             Nodeptr Y = Head;
             while (!(Isnil(X))){
@@ -803,9 +803,9 @@ namespace ft {
         }
 
         Nodeptr Buynode(Nodeptr Parg, char Carg){
-            Nodeptr S = this->Alnod.allocated((void *)0);
-            this->Alptr.construct(&Left(S, 0));
-            this->Alptr.construct(&Right(S, 0));
+            Nodeptr S = this->Alnod.allocate(1, (void *)0);//shit
+            this->Alptr.construct(&Left(S), 0);
+            this->Alptr.construct(&Right(S), 0);
             this->Alptr.construct(&Parent(S), Parg);
             Color(S) = Carg;
             Isnil(S) = false;
