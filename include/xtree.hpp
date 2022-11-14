@@ -51,6 +51,45 @@ namespace ft {
         allocator_type  Alval;
     };
 
+
+    template<class Tr>
+    class Tree;
+
+    template<class Tr> inline
+    void swap(Tree<Tr>& X, Tree<Tr>& Y){
+        X.swap(Y);
+    }
+
+    template<class Tr>inline
+    bool operator==(const Tree<Tr>& X, const Tree<Tr>& Y){
+        return (X.size() == Y.size() && equal (X.begin(), X.end(), Y.begin()));
+    }
+
+    template<class Tr> inline
+    bool operator!=(const Tree<Tr>& X, const Tree<Tr>& Y){
+        return (!(X == Y));
+    }
+
+    template<class Tr> inline
+    bool operator<(const Tree<Tr>& X, const Tree<Tr>& Y){
+        return (ft::lexicographical_compare(X.begin(), X.end(), Y.begin(), Y.end(), X.value_comp()));
+    }
+
+    template<class Tr> inline
+    bool operator>(const Tree<Tr>& X, const Tree<Tr>& Y){
+        return (Y < X);
+    }
+
+    template<class Tr> inline
+    bool operator<=(const Tree<Tr>& X, const Tree<Tr>& Y){
+        return (!(Y < X));
+    }
+
+    template<class Tr> inline
+    bool operator>=(const Tree<Tr>& X, const Tree<Tr>& Y){
+        return (!(X < Y));
+    }
+
     template<class Tr>
     class Tree : public Tree_val<Tr> {
     public:
@@ -64,6 +103,7 @@ namespace ft {
     protected:
         typedef typename Tree_nod<Tr>::Genptr   Genptr;
         typedef typename Tree_nod<Tr>::Node     Node;
+        typedef typename Tr::Kfn            Kfn;
         enum Redbl {Red, Black};
         typedef typename allocator_type::template
             rebind<Node>::other::pointer      Nodeptr;
@@ -83,7 +123,7 @@ namespace ft {
             return((Charref)(*P).Isnil);
         }
         static Keyref Key(Nodeptr P){//shit
-            return (Tr::Kfn()(Value(P)));
+            return (Kfn()(Value(P)));
         }
         static Nodepref Left(Nodeptr P){
             return((Nodepref)(*P).Left);
@@ -334,11 +374,11 @@ namespace ft {
             bool Addleft = true;
             while(!Isnil(X)){
                 Y = X;
-                Addleft = this->comp(Tr::Kfn()(V), Key(X));//TODO:Kfn
+                Addleft = this->comp(Kfn()(V), Key(X));//TODO:Kfn
                 X = Addleft ? Left(X) : Right(X);
             }
             if (Tr::Multi)
-                return (Pairlib(Insert(Addleft, Y, V), true));
+                return (Pairib(Insert(Addleft, Y, V), true));
             else {
                 iterator P = iterator(Y);
                 if(Addleft)
@@ -347,7 +387,7 @@ namespace ft {
                     return (Pairib(Insert(true, Y, V), true));
                 else
                     --P;
-                if (this->comp(Key(P.Mynode()), Tr::Kfn()(V)))
+                if (this->comp(Key(P.Mynode()), Kfn()(V)))
                     return(Pairib(Insert(Addleft, Y, V), true));
                 else
                     return(Pairib(P,false));
@@ -357,16 +397,16 @@ namespace ft {
             if (size() == 0)
                 return (Insert(true, Head, V));
             else if (P == begin()){
-                if (this->comp(Tr::Kfn()(V), Key(P.Mynode())))
+                if (this->comp(Kfn()(V), Key(P.Mynode())))
                     return (Insert(true, P.Mynode(), V));
             }
             else if (P == end()){
-                if (this->comp(Key(Rmost()), Tr::Kfn()(V)))
+                if (this->comp(Key(Rmost()), Kfn()(V)))
                     return(Insert(false, Rmost(), V));
             }
             else {
                 iterator Pb = P;
-                if (this->comp(Key((--Pb).Mynode()), Tr::Kfn()(V)) && this->comp(Tr::Kfn()(V), Key(P.Mynode()))){
+                if (this->comp(Key((--Pb).Mynode()), Kfn()(V)) && this->comp(Tr::Kfn()(V), Key(P.Mynode()))){
                     if (Isnil(Right(Pb.Mynode())))
                         return(Insert(true, P.Mynode(), V));
                     else
@@ -407,10 +447,10 @@ namespace ft {
                 else if (Isnil(Right(Z)))
                     Lmost() = Xpar;
                 else
-                    Lmost() = Mix(X);
+                    Lmost() = Max(X);
                 if(Rmost() != Z)
                     ;
-                else if (Isnil(left(Z)))
+                else if (Isnil(Left(Z)))
                     Rmost() = Xpar;
                 else
                     Rmost() = Max(X);
@@ -435,14 +475,14 @@ namespace ft {
                 else
                     Right(Parent(Z)) = Y;
                 Parent(Y) = Parent(Z);
-                swap(Color(Y), Color(Z));
+                ft::swap(Color(Y), Color(Z));
             }
             if (Color(Z) == Black){
                 for (;X != Root() && Color(X) == Black; Xpar = Parent(X)){
                     if (X == Left(Xpar)){
                         Nodeptr W = Right(Xpar);
                         if(Color(W) == Red){
-                            Color(W) == Black;
+                            Color(W) = Black;
                             Color(Xpar) = Red;
                             Lrotate(Xpar);
                             W = Right(Xpar);
@@ -614,7 +654,7 @@ namespace ft {
                     R = Y;
                 try {
                     Left(Y) = Copy(Left(X), Y);
-                    Right(Y) = copy(Right(X), Y);
+                    Right(Y) = Copy(Right(X), Y);
                 }
                 catch (...) {
                     Erase(R);
@@ -679,7 +719,7 @@ namespace ft {
                     }
                     else {
                         if ( X == Right(Parent(X))){
-                            X = PArent(X);
+                            X = Parent(X);
                             Lrotate(X);
                         }
                         Color(Parent(X)) = Black;
@@ -714,7 +754,7 @@ namespace ft {
             Nodeptr X = Root();
             Nodeptr Y = Head;
             while (!(Isnil(X))){
-                if (comp(Key(X), Kv))
+                if (this->comp(Key(X), Kv))
                     X =Right(X);
                 else
                     Y = X, X = Left(X);
@@ -727,7 +767,7 @@ namespace ft {
         }
 
         Nodeptr& Lmost() const{
-            return (left(Head));
+            return (Left(Head));
         }
 
         void Lrotate(Nodeptr X){
@@ -777,7 +817,7 @@ namespace ft {
         void Rrotate(Nodeptr X){
             Nodeptr Y = Left(X);
             Left(X) = Right(Y);
-            if (!Isnil(right(Y)))
+            if (!Isnil(Right(Y)))
                 Parent(Right(Y)) = X;
             Parent(Y) = Parent(X);
             if (X == Root())
@@ -794,7 +834,7 @@ namespace ft {
             Nodeptr X = Root();
             Nodeptr Y = Head;
             while(!Isnil(X)){
-                if (comp(Kv, Key(X)))
+                if (this->comp(Kv, Key(X)))
                     Y= X, X = Left(X);
                 else
                     X = Right(X);
@@ -831,40 +871,6 @@ namespace ft {
         size_type Size;
     };
 
-    template<class Tr> inline
-    void swap(Tree<Tr>& X, Tree<Tr>& Y){
-        X.swap(Y);
-    }
-
-    template<class Tr>inline
-    bool operator==(const Tree<Tr>& X, const Tree<Tr>& Y){
-        return (X.size() == Y.size() && equal (X.begin(), X.end(), Y.begin()));
-    }
-
-    template<class Tr> inline
-    bool operator!=(const Tree<Tr>& X, const Tree<Tr>& Y){
-        return (!(X == Y));
-    }
-
-    template<class Tr> inline
-    bool operator<(const Tree<Tr>& X, const Tree<Tr>& Y){
-        return (ft::lexicographical_compare(X.begin(), X.end(), Y.begin(), Y.end(), X.value_comp()));
-    }
-
-    template<class Tr> inline
-    bool operator>(const Tree<Tr>& X, const Tree<Tr>& Y){
-        return (Y < X);
-    }
-
-    template<class Tr> inline
-    bool operator<=(const Tree<Tr>& X, const Tree<Tr>& Y){
-        return (!(Y < X));
-    }
-
-    template<class Tr> inline
-    bool operator>=(const Tree<Tr>& X, const Tree<Tr>& Y){
-        return (!(X < Y));
-    }
 }
 
 #endif /* _XTREE_H_ */
