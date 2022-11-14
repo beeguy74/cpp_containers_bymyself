@@ -3,7 +3,7 @@
 #include "stack.hpp"
 #include <stack>
 #include <vector>
-#include "xtree.hpp"
+#include "map.hpp"
 
 int main(int argc, char** argv) {
 	if (argc != 2)
@@ -17,6 +17,7 @@ int main(int argc, char** argv) {
     std::string data = argv[1];
     ft::vector<char>    my_vec;
     std::vector<char>   std_vec;
+    ft::map<std::string, std::string>   ft_map ;
 
     for (unsigned long i=0; i < data.length(); ++i){
         my_vec.push_back(data[i]);

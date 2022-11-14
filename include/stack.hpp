@@ -7,23 +7,23 @@ namespace ft
     template <class T, class Container = ft::vector<T> >
     class stack {
     protected:
-        Container _cont;
+        Container c;
     public:
         typedef Container container_type;
         typedef typename Container::value_type value_type;
         typedef typename Container::size_type size_type;
         // explicit make constructor closed to implicit conversions
-        explicit stack(const Container& cont) : _cont(cont) {};
-        stack() : _cont() {}
-        bool empty() const { return _cont.empty(); };
-        size_type size() const { return _cont.empty(); };
-        value_type& top() { return _cont.back(); };
-        const value_type& top() const { return _cont.back(); };
-        void push(const value_type& x) { _cont.push_back(x); };
-        void pop() { _cont.pop_back(); };
+        explicit stack(const Container& cont) : c(cont) {};
+        stack() : c() {}
+        bool empty() const { return c.empty(); };
+        size_type size() const { return c.empty(); };
+        value_type& top() { return c.back(); };
+        const value_type& top() const { return c.back(); };
+        void push(const value_type& x) { c.push_back(x); };
+        void pop() { c.pop_back(); };
         ~stack(void) {};
-        inline bool Eq(const stack<T, Container>& other) const { return (_cont == other._cont); };
-        inline bool Lt(const stack<T, Container>& other) const { return (_cont < other._cont); };
+        inline bool Eq(const stack<T, Container>& other) const { return (c == other.c); };
+        inline bool Lt(const stack<T, Container>& other) const { return (c < other.c); };
     };
 
     template <class T, class Cont>

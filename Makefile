@@ -1,6 +1,6 @@
 NAME	=		test	
 
-FILES	=		test 
+FILES	=		school_main
 HEADERS =		stack
 
 CXX		=		clang++
