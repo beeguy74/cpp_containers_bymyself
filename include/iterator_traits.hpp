@@ -38,11 +38,11 @@ namespace ft
         typedef const T&                                reference;
     };
 
-    template<class C, class T, class Dist = std::ptrdiff_t, class Pt = T*, class Rt = T&>
+    template<class C, class T, class D = std::ptrdiff_t, class Pt = T*, class Rt = T&>
     struct iterator {
         typedef C       iterator_category;
         typedef T       value_type;
-        typedef Dist    difference_type;
+        typedef D       difference_type;
         typedef Pt      pointer;
         typedef Rt      reference;
     };
@@ -56,7 +56,7 @@ namespace ft
             typename iterator_traits<RanIt>::reference> {
     public:
         typedef reverse_iterator<RanIt>                             Myt;
-        typedef typename iterator_traits<RanIt>::difference_type    Dist;
+        typedef typename iterator_traits<RanIt>::difference_type    D;
         typedef typename iterator_traits<RanIt>::pointer            Ptr;
         typedef typename iterator_traits<RanIt>::reference          Ref;
         typedef RanIt iterator_type;
@@ -94,23 +94,23 @@ namespace ft
             ++current;
             return tmp;
         };
-        Myt    &operator+=(Dist n) {
+        Myt    &operator+=(D n) {
             current -= n;
             return *this;
         };
-        Myt operator*(Dist N){
+        Myt operator*(D N){
             current -= N;
             return *this;
         }
-        // Myt    operator+(Dist n) const { return reverse_iterator(*this) += n; };
-        Myt&    operator-=(Dist n){
+        // Myt    operator+(D n) const { return reverse_iterator(*this) += n; };
+        Myt&    operator-=(D n){
             current += n;
             return *this;
         };
-        Myt operator-(Dist n) const {
+        Myt operator-(D n) const {
             return Myt(current + n);
         };
-        Ref operator[](Dist n) const {
+        Ref operator[](D n) const {
             return *(*this + n);
         };
         bool Eq(const Myt& Y) const{
@@ -119,12 +119,12 @@ namespace ft
         bool Lt(const Myt& Y) const{
             return (Y.current < current);
         }
-        Dist Mi(const Myt& Y) const{
+        D Mi(const Myt& Y) const{
             return (Y.current - current);
         }
         template<class Num>
         Myt		operator+(Num bias) const{return (Myt(current - bias));}
-		// Myt		operator-(Dist bias) {return current + bias;}
+		// Myt		operator-(D bias) {return current + bias;}
     protected:
         RanIt current;
     };
