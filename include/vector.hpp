@@ -112,6 +112,8 @@ namespace ft
             return (*this);
         }
         void reserve(size_type N){
+            if (N <= capacity())
+                return;
             if (max_size() < N)
                 Xlen(); //TODO Xlen
             else if(capacity() < N){
@@ -127,6 +129,9 @@ namespace ft
                     Destroy(First, Last);
                     Mybase::Alval.deallocate(First, End - First);
                 }
+                End = Q + N;
+                Last = Q + size();
+                First = Q;
             }
         }
         size_type   capacity() const{
