@@ -75,7 +75,9 @@ namespace ft
             RanIt   Tmp = current;
             return (*--Tmp);
         };
-        Ptr                 operator->() const {return &**this;};
+        Ptr                 operator->() const {
+            return &(operator*());
+        };
         Myt&    operator++() {
             --current;
             return *this;
@@ -94,24 +96,22 @@ namespace ft
             ++current;
             return tmp;
         };
+        Myt    operator+(D n) const {
+            return Myt(current - n);
+        };
         Myt    &operator+=(D n) {
             current -= n;
-            return *this;
-        };
-        Myt operator*(D N){
-            current -= N;
-            return *this;
-        }
-        // Myt    operator+(D n) const { return reverse_iterator(*this) += n; };
-        Myt&    operator-=(D n){
-            current += n;
             return *this;
         };
         Myt operator-(D n) const {
             return Myt(current + n);
         };
+        Myt&    operator-=(D n){
+            current += n;
+            return *this;
+        };
         Ref operator[](D n) const {
-            return *(*this + n);
+            return current[-n-1];
         };
         bool Eq(const Myt& Y) const{
             return (current == Y.current);
@@ -122,8 +122,20 @@ namespace ft
         D Mi(const Myt& Y) const{
             return (Y.current - current);
         }
-        template<class Num>
-        Myt		operator+(Num bias) const{return (Myt(current - bias));}
+
+
+        // Ptr                 operator->() const {
+        //     return &**this;
+        // };
+        // Myt operator*(D N){
+        //     current -= N;
+        //     return *this;
+        // }
+        // template<class Num>
+        // Myt		operator+(Num bias) const{return (Myt(current - bias));}
+        // Ref operator[](D n) const {
+        //     return *(*this + n);
+        // };
 		// Myt		operator-(D bias) {return current + bias;}
     protected:
         RanIt current;
