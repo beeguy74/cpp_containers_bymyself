@@ -3,7 +3,7 @@ NAME	=		test
 FILES	=		school_main
 HEADERS =		stack
 
-CXX		=		clang++
+CXX		=		g++
 
 SRC_DIR	=		src/
 OBJ_DIR	=		obj/
