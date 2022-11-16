@@ -35,7 +35,7 @@ namespace ft
         typedef typename A::value_type      value_type;
         typedef Ptrit<value_type, difference_type, Tptr, reference,
             Tptr, reference>                iterator;
-        typedef Ptrit<value_type, difference_type, Ctptr, const reference,
+        typedef Ptrit<value_type, difference_type, Ctptr, const_reference,
             Tptr, reference>                const_iterator;
         typedef ft::reverse_iterator<iterator>  reverse_iterator;
         typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
