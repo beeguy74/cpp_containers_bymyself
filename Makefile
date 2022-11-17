@@ -1,9 +1,9 @@
 NAME	=		test	
 
-FILES	=		school_main
+FILES	=		test
 HEADERS =		stack
 
-CXX		=		g++
+CXX		=		c++
 
 SRC_DIR	=		src/
 OBJ_DIR	=		obj/
