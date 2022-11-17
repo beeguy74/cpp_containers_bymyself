@@ -105,7 +105,7 @@ namespace ft
             }
             else {
                 Destroy(First, Last);
-                Mybase::Alval.deallocate(First, End - First);
+                Alval.deallocate(First, End - First);
                 if (Buy(X.size()))
                     Last = Ucopy(X.begin(), X.end(), First);
             }
@@ -117,17 +117,17 @@ namespace ft
             if (max_size() < N)
                 Xlen(); //TODO Xlen
             else if(capacity() < N){
-                pointer Q= Mybase::Alval.allocate(N, (void*)0);
+                pointer Q= Alval.allocate(N, (void*)0);
                 try {
                     Ucopy(begin(), end(), Q);
                 }
                 catch (...) {
-                    Mybase::Alval.deallocate(Q, N);
+                    Alval.deallocate(Q, N);
                     throw;
                 }
                 if (First != 0){
                     Destroy(First, Last);
-                    Mybase::Alval.deallocate(First, End - First);
+                    Alval.deallocate(First, End - First);
                 }
                 End = Q + N;
                 Last = Q + size();
@@ -174,13 +174,13 @@ namespace ft
             return (First == 0? 0 : Last - First);
         }
         size_type   max_size() const {
-            return (Mybase::Alval.max_size());
+            return (Alval.max_size());
         }
         bool    empty() const{
             return (size() == 0);
         }
         A   get_allocator() const {
-            return (Mybase::Alval);
+            return (Alval);
         }
         const_reference at(size_type P) const{
             if (size() <= P)
@@ -253,7 +253,7 @@ namespace ft
                 if (N < size() + M){
                     N = size() + M;
                 }
-                pointer S = Mybase::Alval.allocate(N, (void *)0);
+                pointer S = Alval.allocate(N, (void *)0);
                 pointer Q;
                 try {
                     Q = Ucopy (begin(), P, S);
@@ -262,12 +262,12 @@ namespace ft
                 }
                 catch (...) {
                     Destroy(S, Q);
-                    Mybase::Alval.deallocate(S, N);
+                    Alval.deallocate(S, N);
                     throw;
                 }
                 if (First != 0){
                     Destroy(First, Last);
-                    Mybase::Alval.deallocate(First, End - First);
+                    Alval.deallocate(First, End - First);
                 }
                 End = S + N;
                 Last = S + size() + M;
@@ -320,7 +320,7 @@ namespace ft
                 : N + N / 2;
                 if (N < size() + M)
                     N = size() + M;
-                pointer S = Mybase::Alval.allocate(N, (void *)0);
+                pointer S = Alval.allocate(N, (void *)0);
                 pointer Q;
                 try {
                     Q = Ucopy(begin(), P, S);
@@ -329,12 +329,12 @@ namespace ft
                 }
                 catch (...){
                     Destroy(S, Q);
-                    Mybase::Alval.deallocate(S, N);
+                    Alval.deallocate(S, N);
                     throw;
                 }
                 if (First != 0){
                     Destroy(First, Last);
-                    Mybase::Alval.deallocate(First, End - First);
+                    Alval.deallocate(First, End - First);
                 }
                 End = S + N;
                 Last = S + size() + M;
@@ -386,7 +386,7 @@ namespace ft
             return (lexicographical_compare(begin(), end(), X.begin(), X.end()));
         }
         void    swap(Myt& X){
-            if (Mybase::Alval == X.Alval){
+            if (Alval == X.Alval){
                 ft::swap(First, X.First); //TODO: swap
                 ft::swap(Last, X.Last);
                 ft::swap(End, X.End);
@@ -407,7 +407,7 @@ namespace ft
             if (N == 0)
                 return(0);
             else {
-                First = Mybase::Alval.allocate(N, (void *)0);
+                First = Alval.allocate(N, (void *)0);
                 Last = First;
                 End = First + N;
                 return (1);
@@ -416,13 +416,13 @@ namespace ft
         void    Clear(){
             if(First != 0){
                 Destroy(First, Last);
-                Mybase::Alval.deallocate(First, End - First);
+                Alval.deallocate(First, End - First);
             }
             First = 0, Last = 0, End = 0;
         }
         void    Destroy(pointer F, pointer L){
             for (; F != L; ++F){
-                Mybase::Alval.destroy(F);
+                Alval.destroy(F);
             }
         }
         template<class It>
@@ -430,7 +430,7 @@ namespace ft
             pointer Qs = Q;
             try {
                 for (; F !=L; ++Q, ++F)
-                    Mybase::Alval.construct(Q, *F);
+                    Alval.construct(Q, *F);
             }
             catch (...){
                 Destroy(Qs, Q);
@@ -442,7 +442,7 @@ namespace ft
             pointer Qs = Q;
             try {
                 for (; 0 < N; --N, ++Q){
-                    Mybase::Alval.construct(Q,X);
+                    Alval.construct(Q,X);
                 }
             } catch (...) {
                 Destroy(Qs, Q);
