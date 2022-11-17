@@ -34,15 +34,15 @@ namespace ft
         typedef typename A::const_reference const_reference;
         typedef typename A::value_type      value_type;
         typedef Ptrit<value_type, difference_type, Tptr, reference,
-            Tptr, reference>                iterator;
+            Tptr, reference, false>                iterator;
         typedef Ptrit<value_type, difference_type, Ctptr, const_reference,
-            Tptr, reference>                const_iterator;
+            Tptr, reference, true>                const_iterator;
         typedef ft::reverse_iterator<iterator>  reverse_iterator;
         typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
-        operator const_iterator() const{
-            iterator It;
-            return const_iterator(It);
-        }
+        // operator const_iterator() const{
+        //     iterator It;
+        //     return const_iterator(It);
+        // }
         vector() : Mybase(){
             Buy(0);
         }

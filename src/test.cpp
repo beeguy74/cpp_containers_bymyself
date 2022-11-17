@@ -6,6 +6,12 @@
 #include "map.hpp"
 
 int main(int argc, char** argv) {
+    ft::vector<int>::iterator iter;
+    ft::vector<int>::const_iterator const_iter;
+    // should works
+    const_iter = iter;
+    // should not
+    // iter = const_iter;
 	if (argc != 2)
 	{
 		std::cerr << "Usage: ./test some_data" << std::endl;

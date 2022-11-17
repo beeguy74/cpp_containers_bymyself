@@ -2,6 +2,7 @@
 #define _ITERATOR_H_
 
 #include "iterator_traits.hpp"
+#include "ft_sfinae.hpp"
 
 namespace ft {
     struct Int_iterator_tag {};
@@ -119,18 +120,36 @@ namespace ft {
             N += L - F;
         }
 
-    template<class T, class D, class Pt, class Rt, class Pt2, class Rt2>
+    template<class T, class D, class Pt, class Rt, class Pt2, class Rt2, bool IsConst>
         class Ptrit : public iterator<random_access_iterator_tag,
                 T, D, Pt, Rt> {
         public:
-            typedef Ptrit<T, D, Pt, Rt, Pt2, Rt2>   Myt;
+            typedef Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst>   Myt;
             Ptrit() {}
             Ptrit(Pt P) : current(P) {}
-            Ptrit(const Ptrit<T, D, Pt, Rt, Pt2, Rt2> &X) : current(X.base()) {}
-            template<class c_type, class c_pointer, class c_reference>
-            operator Ptrit<c_type, D, c_pointer, c_reference, Pt2, Rt2>() const{
-                return (c_pointer(current));
-            }
+            Ptrit(const Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst> &X) : current(X.base()) {}
+
+            template<class c_pointer, class c_reference, bool WasConst>
+            Ptrit(const Ptrit<T, D, c_pointer, c_reference, Pt2, Rt2, WasConst> &X, typename ft::enable_if<IsConst || !WasConst, bool>::type = 0) : current(X.base()) {}
+            // template<class c_pointer, class c_reference>
+            // operator Ptrit<T, D, c_pointer, c_reference, Pt2, Rt2>() const{
+            //     return (c_pointer(current));
+            // }
+
+
+            // template<class c_pointer, class c_reference>
+            // operator Ptrit<T, D, c_pointer, c_reference, Pt2, Rt2>() const{
+            //     Ptrit<T, D, c_pointer, c_reference, Pt2, Rt2> tmp = this;
+            //     return (tmp);
+            // }
+            // template<bool WasConst>
+            // Myt& operator=(const Ptrit<T, D, Pt, Rt, Pt2, Rt2, WasConst>& rhs, typename ft::enable_if<IsConst && !WasConst> = 0) {
+            //     return this;
+            // }
+
+            // Myt& operator=(const Ptrit<T, D, Pt, Rt, Pt2, Rt2, false>& rhs, typename ft::enable_if<IsConst> = 0) {
+            //     return this;
+            // }
 
             Pt  base() const{
                 return (current);
@@ -206,9 +225,9 @@ namespace ft {
             Pt current;
         };
 
-    template<class T, class D, class Pt, class Rt, class Pt2, class Rt2, class Num> inline
-    Ptrit<T, D, Pt, Rt, Pt2, Rt2> operator+(Num N, const Ptrit<T, D, Pt, Rt, Pt2, Rt2> &Y){
-        return  Ptrit<T, D, Pt, Rt, Pt2, Rt2>(Y + N);
+    template<class T, class D, class Pt, class Rt, class Pt2, class Rt2, bool IsConst, class Num> inline
+    Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst> operator+(Num N, const Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst> &Y){
+        return  Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst>(Y + N);
     }
 }
 
