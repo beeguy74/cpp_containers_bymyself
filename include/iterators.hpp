@@ -180,15 +180,15 @@ namespace ft {
                 --current;
                 return (tmp);
             }
-            bool operator==(int Y) const {
-                return (current == (Pt)Y);
-            }
-            bool operator==(const Myt& Y) const {
-                return (current == Y.current);
-            }
-            bool operator!=(const Myt& Y) const {
-                return (!(*this == Y));
-            }
+            // bool operator==(int Y) const {
+            //     return (current == (Pt)Y);
+            // }
+            // bool operator==(const Myt& Y) const {
+            //     return (current == Y.current);
+            // }
+            // bool operator!=(const Myt& Y) const {
+            //     return (!(*this == Y));
+            // }
             Myt& operator+=(D N){
                 current += N;
                 return (*this);
@@ -220,6 +220,13 @@ namespace ft {
             }
             D   operator-(const Myt& Y) const{
                 return (current - Y.current);
+            }
+
+            friend bool operator==(const Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst> &Y ,const Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst> &X) {
+                return (Y.current == X.current);
+            }
+            friend bool operator!=(const Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst> &Y ,const Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst> &X) {
+                return (!(Y == X.current));
             }
         protected:
             Pt current;
