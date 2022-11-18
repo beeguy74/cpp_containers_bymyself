@@ -150,6 +150,27 @@ namespace ft
             const reverse_iterator<RanIt>& Y){
         return (X.Mi(Y));
     }
+    template <class IteratorLeft, class IteratorRight>
+    typename reverse_iterator<IteratorLeft>::D operator-(
+        const reverse_iterator<IteratorLeft>& lhs,
+        const reverse_iterator<IteratorRight>& rhs)
+    {
+        return rhs.base() - lhs.base();
+    }
+    template <class Iterator>
+    reverse_iterator<Iterator> operator+(
+        typename reverse_iterator<Iterator>::D n,
+        const reverse_iterator<Iterator>& lhs)
+    {
+        return reverse_iterator<Iterator> (lhs.base() - n);
+    }
+    template <class IteratorLeft, class IteratorRight>
+    bool    operator==(
+        const reverse_iterator<IteratorLeft> & lhs,
+        const reverse_iterator<IteratorRight> & rhs)
+    {
+        return (lhs.base() == rhs.base());
+    }
     template<class RanIt> inline
     bool    operator==(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y){
         return (X.Eq(Y));

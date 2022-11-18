@@ -232,6 +232,13 @@ namespace ft {
             Pt current;
         };
 
+    template<class T, class D, class Pt, class Rt, class Cpt, class Crt, class Pt2, class Rt2, bool IsConst, bool Const> inline
+    D operator-(
+        const Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst>& lhs,
+        const Ptrit<T, D, Cpt, Crt, Pt2, Rt2, Const>& rhs)
+    {
+        return lhs.base() - rhs.base();
+    }
     template<class T, class D, class Pt, class Rt, class Pt2, class Rt2, bool IsConst, class Num> inline
     Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst> operator+(Num N, const Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst> &Y){
         return  Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst>(Y + N);
