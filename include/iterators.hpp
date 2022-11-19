@@ -30,6 +30,12 @@ namespace ft {
             return (X);
         }
 
+    template<class T> inline //shit
+        bidirectional_iterator_tag Iter_cat(const T){
+            bidirectional_iterator_tag X;
+            return (X);
+        }
+
     inline Int_iterator_tag Iter_cat(bool){
         Int_iterator_tag    X;
         return (X);
@@ -239,7 +245,7 @@ namespace ft {
     {
         return lhs.base() - rhs.base();
     }
-    template<class T, class D, class Pt, class Rt, class Pt2, class Rt2, bool IsConst, class Num> inline
+    template<class T, class D, class Pt, class Rt, class Pt2, class Rt2, bool IsConst, class Num> inline //shit!
     Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst> operator+(Num N, const Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst> &Y){
         return  Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst>(Y + N);
     }
