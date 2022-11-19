@@ -171,29 +171,28 @@ namespace ft
     {
         return (lhs.base() == rhs.base());
     }
-    template<class RanIt> inline
-    bool    operator==(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y){
-        return (X.Eq(Y));
+    template <class IteratorLeft, class IteratorRight>
+    bool    operator!=(
+        const reverse_iterator<IteratorLeft> & lhs,
+        const reverse_iterator<IteratorRight> & rhs)
+    {
+        return !(lhs == rhs);
     }
-    template<class RanIt> inline
-    bool    operator!=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y){
-        return (!(X == Y));
+    template<class RanIt, class RanItRight> inline
+    bool    operator<(const reverse_iterator<RanIt>& X, const reverse_iterator<RanItRight>& Y){
+        return (X.base() > Y.base());
     }
-    template<class RanIt> inline
-    bool    operator<(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y){
-        return (X.Lt(Y));
+    template<class RanIt, class RanItRight> inline
+    bool    operator>(const reverse_iterator<RanIt>& X, const reverse_iterator<RanItRight>& Y){
+        return (X.base() < Y.base());
     }
-    template<class RanIt> inline
-    bool    operator>(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y){
-        return (Y < X);
+    template<class RanIt, class RanItRight> inline
+    bool    operator<=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanItRight>& Y){
+        return !(X.base() < Y.base());
     }
-    template<class RanIt> inline
-    bool    operator<=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y){
-        return !(Y < X);
-    }
-    template<class RanIt> inline
-    bool    operator>=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanIt>& Y){
-        return !(X < Y);
+    template<class RanIt, class RanItRight> inline
+    bool    operator>=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanItRight>& Y){
+        return !(Y.base() < X.base());
     }
 
 }
