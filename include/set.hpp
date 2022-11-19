@@ -37,7 +37,7 @@ namespace ft {
         typedef Pr  key_compare;
         typedef typename Mybase::value_compare  value_compare;
         typedef typename Mybase::allocator_type allocator_type;
-        typedef typenae Mybase::size_type       size_type;
+        typedef typename Mybase::size_type       size_type;
         typedef typename Mybase::difference_type    difference_type;
         typedef typename Mybase::pointer        pointer;
         typedef typename Mybase::const_pointer  const_pointer;
@@ -55,21 +55,21 @@ namespace ft {
         template<class It>
         set(It F, It L) : Mybase(key_compare(), allocator_type()){
             for (; F != L; ++F)
-                insert (*F);
+                this->insert (*F);
         }
         template<class It>
-        set(it F, It L, const key_compare& Pred): Mybase(Pred, allocator_type()){
+        set(It F, It L, const key_compare& Pred): Mybase(Pred, allocator_type()){
             for (; F != L; ++F)
-                insert (*F);
+                this->insert (*F);
         }
         template<class It>
-        set(it F, It L, const key_compare& Pred, const allocator_type& Al) 
+        set(It F, It L, const key_compare& Pred, const allocator_type& Al) 
             : Mybase(Pred, Al){
             for (; F != L; ++F)
-                insert (*F);
+                this->insert (*F);
         }
 
-    }
+    };
 }
 
 #endif

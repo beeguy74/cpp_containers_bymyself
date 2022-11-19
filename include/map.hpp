@@ -5,11 +5,18 @@
 # include "utility.hpp"
 
 namespace ft{
+    // template<class Key, class T, class Pred, class A>
+    // class map;
+
+    // template<class Key, class T, class Pred, class A>
+    // bool operator==();
+
     template<class K, class T, class Pr, class Ax, bool Mfl>
     class Tmap_traits{
     public:
         typedef K       key_type;
-        typedef ft::pair<const K, T>    value_type;
+        typedef ft::pair<const K, T>
+                        value_type;
         typedef Pr      key_compare;
         typedef typename Ax::template rebind<value_type>::other
                         allocator_type;
@@ -19,20 +26,21 @@ namespace ft{
             }
         };
         enum {Multi = Mfl};
+        Tmap_traits() : comp() {}
         Tmap_traits(Pr Parg) : comp(Parg) {}
-            class value_compare : public std::binary_function<value_type, value_type, bool> {
-                friend class Tmap_traits<K, T, Pr, Ax, Mfl>;
-            public:
-                bool operator()(const value_type& X, const value_type& Y) const{
-                    return (comp(X.first, Y.first));
-                }
-                value_compare (key_compare& Pred) : comp(Pred){}
-            protected:
-                key_compare comp;
-            };
-
-
         Pr  comp;
+
+        class value_compare : public std::binary_function<value_type, value_type, bool> {
+            friend class Tmap_traits<K, T, Pr, Ax, Mfl>;
+        public:
+            bool operator()(const value_type& X, const value_type& Y) const{
+                return (comp(X.first, Y.first));
+            }
+            value_compare (key_compare Pred) : comp(Pred){}
+        protected:
+            key_compare comp;
+        };
+
     }; //class Tmap_traits;
 
     template<class K, class T, class Pr = std::less<K>, class A = std::allocator<pair<const K, T> > >

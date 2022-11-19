@@ -369,6 +369,7 @@ namespace ft {
             return (value_compare(key_comp()));
         }
         Pairib insert(const value_type& V){
+            // std::cout << "insert! " << V.first << V.second << std::endl;
             Nodeptr X = Root();
             Nodeptr Y = Head;
             bool Addleft = true;
@@ -381,7 +382,7 @@ namespace ft {
                 return (Pairib(Insert(Addleft, Y, V), true));
             else {
                 iterator P = iterator(Y);
-                if(Addleft)
+                if(!Addleft)
                     ;
                 else if(P == begin())
                     return (Pairib(Insert(true, Y, V), true));
@@ -406,7 +407,7 @@ namespace ft {
             }
             else {
                 iterator Pb = P;
-                if (this->comp(Key((--Pb).Mynode()), Kfn()(V)) && this->comp(Tr::Kfn()(V), Key(P.Mynode()))){
+                if (this->comp(Key((--Pb).Mynode()), Kfn()(V)) && this->comp(Kfn()(V), Key(P.Mynode()))){
                     if (Isnil(Right(Pb.Mynode())))
                         return(Insert(true, P.Mynode(), V));
                     else
@@ -414,6 +415,7 @@ namespace ft {
                 }
                 return(insert(V).first);
             }
+            // return P;//shit
         }
         template<class It>
         void insert(It F, It L){
@@ -576,12 +578,12 @@ namespace ft {
 
         iterator find(const key_type& Kv){
             iterator P = lower_bound(Kv);
-            return (P == end() || comp(Kv, Key(P.Mynode())) ? end() : P);
+            return (P == end() || this->comp(Kv, Key(P.Mynode())) ? end() : P);
         }
 
         const_iterator find(const key_type& Kv) const{
             const_iterator P = lower_bound(Kv);
-            return (P == end() || comp(Kv, Key(P.Mynode())) ? end() : P);
+            return (P == end() || this->comp(Kv, Key(P.Mynode())) ? end() : P);
         }
 
         size_type count(const key_type& Kv) const{
