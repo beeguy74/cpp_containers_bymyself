@@ -138,20 +138,26 @@ namespace ft {
             return ((Vref)(*P).Value);
         }
     public:
-        typedef typename allocator_type::size_type  size_type;
-        typedef typename allocator_type::difference_type    Dift;
-        typedef Dift    difference_type;
+        typedef typename allocator_type::size_type
+                            size_type;
+        typedef typename allocator_type::difference_type
+                            Dift;
+        typedef Dift        difference_type;
         typedef typename allocator_type::template
-            rebind<value_type>::other::pointer        Tptr;
+            rebind<value_type>::other::pointer
+                            Tptr;
         typedef typename allocator_type::template
-            rebind<value_type>::other::const_pointer  Ctptr;
+            rebind<value_type>::other::const_pointer
+                            Ctptr;
         typedef typename allocator_type::template
-            rebind<value_type>::other::reference      Reft;
-        typedef Tptr    pointer;
-        typedef Ctptr   const_pointer;
-        typedef Reft    reference;
+            rebind<value_type>::other::reference
+                            Reft;
+        typedef Tptr        pointer;
+        typedef Ctptr       const_pointer;
+        typedef Reft        reference;
         typedef typename allocator_type::template
-            rebind<value_type>::other::const_reference    const_reference;
+            rebind<value_type>::other::const_reference
+                            const_reference;
 
         class iterator;
         friend class iterator;
@@ -264,12 +270,12 @@ namespace ft {
                 --*this;
                 return (Tmp);
             }
-            bool operator==(const const_iterator& X) const{
-                return (Ptr == X.Ptr);
-            }
-            bool operator!=(const const_iterator& X) const{
-                return (!(*this == X));
-            }
+            // bool operator==(const const_iterator& X) const{
+            //     return (Ptr == X.Ptr);
+            // }
+            // bool operator!=(const const_iterator& X) const{
+            //     return (!(*this == X));
+            // }
             void Dec(){
                 if(Isnil(Ptr))
                     Ptr = Right(Ptr);
@@ -297,6 +303,14 @@ namespace ft {
             }
             Nodeptr Mynode() const{
                 return (Ptr);
+            }
+
+            friend bool    operator==(const const_iterator& lhs, const const_iterator& rhs){
+                return (lhs.Ptr == rhs.Ptr);
+            }
+
+            friend bool    operator!=(const const_iterator& lhs, const const_iterator& rhs){
+                return !(lhs.Ptr == rhs.Ptr);
             }
         protected:
             Nodeptr Ptr;
