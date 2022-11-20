@@ -415,7 +415,7 @@ namespace ft {
                 }
                 return(insert(V).first);
             }
-            // return P;//shit
+            return P;//shit
         }
         template<class It>
         void insert(It F, It L){
@@ -617,9 +617,9 @@ namespace ft {
         }
         void swap(Myt& X){
             if(get_allocator() == X.get_allocator()){
-                swap(this->comp, X.comp);
-                swap(Head, X.Head);
-                swap(Size, X.Size);
+                ft::swap(this->comp, X.comp);
+                ft::swap(Head, X.Head);
+                ft::swap(Size, X.Size);
             }
             else {
                 Myt Ts = *this;

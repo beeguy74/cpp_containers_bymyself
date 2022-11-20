@@ -87,7 +87,9 @@ namespace ft{
             return((*P).second);
         }
     }; //class map;
-
+    
+    template <class _Key, class _T, class _Compare, class _Allocator>
+        void swap(map<_Key,_T,_Compare,_Allocator>& lhs, map<_Key,_T,_Compare,_Allocator>& rhs) {lhs.swap(rhs);}
 }
 
 #endif
