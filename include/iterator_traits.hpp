@@ -62,6 +62,7 @@ namespace ft
         typedef RanIt iterator_type;
         reverse_iterator() : current(NULL) {};
         explicit reverse_iterator(RanIt x) : current(x) {};
+        // reverse_iterator(reverse_iterator const & src) :current(src.base()){};
         template<class U>
         reverse_iterator(const reverse_iterator<U> &x) : current(x.base()) {};
         ~reverse_iterator() {};
