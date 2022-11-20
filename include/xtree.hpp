@@ -390,7 +390,6 @@ namespace ft {
             return (value_compare(key_comp()));
         }
         Pairib insert(const value_type& V){
-            // std::cout << "insert! " << V.first << V.second << std::endl;
             Nodeptr X = Root();
             Nodeptr Y = Head;
             bool Addleft = true;
@@ -430,7 +429,7 @@ namespace ft {
                 iterator Pb = P;
                 if (this->comp(Key((--Pb).Mynode()), Kfn()(V)) && this->comp(Kfn()(V), Key(P.Mynode()))){
                     if (Isnil(Right(Pb.Mynode())))
-                        return(Insert(true, P.Mynode(), V));
+                        return(Insert(true, Pb.Mynode(), V));
                     else
                         return(Insert(true, P.Mynode(), V));
                 }
@@ -627,7 +626,7 @@ namespace ft {
         }
 
         const_iterator upper_bound(const key_type&Kv) const{
-            return (const_iterator(Lbound(Kv)));
+            return (const_iterator(Ubound(Kv)));
         }
 
         Pairii equal_range(const key_type& Kv){
