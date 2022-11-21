@@ -375,13 +375,15 @@ namespace ft {
             return(Size);
         }
         size_type max_size() const{
-            return (this->Alval.max_size());
+            // return (this->Alval.max_size());
+            return (this->Alnod.max_size());
         }
         bool empty() const{
             return(size() == 0);
         }
         allocator_type get_allocator() const{
-            return(this->Alval);
+            // return(this->Alval);
+            return(this->Alnod);
         }
         key_compare key_comp() const{//some shit
             return (this->comp);
