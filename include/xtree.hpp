@@ -443,6 +443,7 @@ namespace ft {
                 insert(*F);
         }
         iterator erase(iterator P){
+            // std::cout << "one iterator erase\n" << std::endl;
             if (Isnil(P.Mynode()))
                 throw std::out_of_range("tree iterator");
             Nodeptr X, Xpar;
@@ -469,7 +470,7 @@ namespace ft {
                 else if (Isnil(Right(Z)))
                     Lmost() = Xpar;
                 else
-                    Lmost() = Max(X);
+                    Lmost() = Min(X);
                 if(Rmost() != Z)
                     ;
                 else if (Isnil(Left(Z)))
@@ -500,7 +501,7 @@ namespace ft {
                 ft::swap(Color(Y), Color(Z));
             }
             if (Color(Z) == Black){
-                for (;X != Root() && Color(X) == Black; Xpar = Parent(X)){
+                for (;X != Root() && Color(X) == Black; Xpar = Parent(X))
                     if (X == Left(Xpar)){
                         Nodeptr W = Right(Xpar);
                         if(Color(W) == Red){
@@ -515,47 +516,48 @@ namespace ft {
                             Color(W) = Red;
                             X = Xpar;
                         }
-                        else if (Color(Right(W)) == Black){
-                            Color(Left(W)) = Black;
-                            Color(W) = Red;
-                            Rrotate(W);
-                            W = Right(Xpar);
+                        else {
+                            if (Color(Right(W)) == Black){
+                                Color(Left(W)) = Black;
+                                Color(W) = Red;
+                                Rrotate(W);
+                                W = Right(Xpar);
+                            }
                             Color(W) = Color(Xpar);
                             Color(Xpar) = Black;
                             Color(Right(W)) = Black;
                             Lrotate(Xpar);
                             break;
                         }
+                    }
+                    else {
+                        Nodeptr W = Left(Xpar);
+                        if(Color(W) == Red){
+                            Color(W) = Black;
+                            Color(Xpar) = Red;
+                            Rrotate(Xpar);
+                            W = Left(Xpar);
+                        }
+                        if (Isnil(W))
+                            X = Xpar; //shit
+                        else if(Color(Right(W)) == Black && Color(Left(W)) == Black){
+                            Color(W) = Red;
+                            X = Xpar;
+                        }
                         else {
-                            Nodeptr W = Left(Xpar);
-                            if(Color(W) == Red){
-                                Color(W) = Black;
-                                Color(Xpar) = Red;
-                                Rrotate(Xpar);
+                            if(Color(Left(W)) == Black){
+                                Color(Right(W)) = Black;
+                                Color(W) = Red;
+                                Lrotate(W);
                                 W = Left(Xpar);
                             }
-                            if (Isnil(W))
-                                X = Xpar; //shit
-                            else if(Color(Right(W)) == Black && Color(Left(W)) == Black){
-                                Color(W) = Red;
-                                X = Xpar;
-                            }
-                            else {
-                                if(Color(Left(W)) == Black){
-                                    Color(Right(W)) = Black;
-                                    Color(W) = Red;
-                                    Lrotate(W);
-                                    W = Left(Xpar);
-                                }
-                                Color(W) = Color(Xpar);
-                                Color(Xpar) = Black;
-                                Color(Left(W)) = Black;
-                                Rrotate(Xpar);
-                                break;
-                            }
+                            Color(W) = Color(Xpar);
+                            Color(Xpar) = Black;
+                            Color(Left(W)) = Black;
+                            Rrotate(Xpar);
+                            break;
                         }
                     }
-                }
                 Color(X) = Black;
             }
             Destval(&Value(Z));
@@ -566,6 +568,7 @@ namespace ft {
         }//shit
 
         iterator erase(iterator F, iterator L){
+            // std::cout << "iterators erase\n" << std::endl;
             if (size() == 0 || F != begin() || L != end()){
                 while (F != L)
                     erase(F++);
@@ -580,6 +583,7 @@ namespace ft {
         }
 
         size_type erase(const key_type& X){
+            // std::cout << "key_type erase\n" << X << std::endl;
             Pairii P = equal_range(X);
             size_type N = 0;
             Distance(P.first, P.second, N);
