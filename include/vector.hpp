@@ -9,20 +9,22 @@
 
 namespace ft
 {
-    template<class T, class A>
-    class Vector_val {
-        protected:
-        Vector_val(A Al = A()) : Alval(Al) {}
-        typedef typename A::template rebind<T>::other Alty;
-        Alty Alval;
-    };
+    // template<class T, class A>
+    // class Vector_val {
+    //     protected:
+    //     Vector_val(A Al = A()) : Alval(Al) {}
+    //     typedef typename A::template rebind<T>::other Alty;
+    //     Alty Alval;
+    // };
 
     template < class T, class Ax = std::allocator<T> >
-    class vector : public Vector_val<T, Ax> {
+    class vector {
+    // class vector : public Vector_val<T, Ax> {
     public:
         typedef vector<T, Ax>               Myt;
-        typedef Vector_val<T, Ax>           Mybase;
-        typedef typename Mybase::Alty       A;
+        // typedef Vector_val<T, Ax>           Mybase;
+        typedef typename Ax::template rebind<T>::other  Alty;
+        typedef Alty       A;
         typedef A                           allocator_type;
         typedef typename A::size_type       size_type;
         typedef typename A::difference_type difference_type;
@@ -43,34 +45,34 @@ namespace ft
         //     iterator It;
         //     return const_iterator(It);
         // }
-        vector() : Mybase(){
+        vector() {
             Buy(0);
         }
-        explicit vector(const A& Al) : Mybase(Al){
+        explicit vector(const A& Al) : Alval(Al) {
             Buy(0);
         }
-        explicit vector(size_type N) : Mybase(){
+        explicit vector(size_type N) {
             if(Buy(N))
                 Last = Ufill (First, N, T());
         }
-        vector(size_type N, const T& V) : Mybase() {
+        vector(size_type N, const T& V)  {
             if (Buy(N))
                 Last = Ufill(First, N, V);
         }
-        vector(size_type N, const T& V, const A& Al) : Mybase(Al){
+        vector(size_type N, const T& V, const A& Al) : Alval(Al) {
             if (Buy(N))
                 Last = Ufill(First, N, V);
         }
-        vector(const Myt &X) : Mybase(X.Alval){
+        vector(const Myt &X) {
             if (Buy(X.size()))
                 Last = Ucopy(X.begin(), X.end(), First);
         }
         template<class It>
-        vector(It F, It L) : Mybase(){
+        vector(It F, It L) {
             Construct(F, L, ft::Iter_cat(F));
         }
         template<class It>
-        vector(It F, It L, const A& Al) : Mybase(Al) {
+        vector(It F, It L, const A& Al) : Alval(Al)  {
             Construct(F, L, ft::Iter_cat(F));
         }
         template<class It>
