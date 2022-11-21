@@ -429,13 +429,12 @@ namespace ft {
                 iterator Pb = P;
                 if (this->comp(Key((--Pb).Mynode()), Kfn()(V)) && this->comp(Kfn()(V), Key(P.Mynode()))){
                     if (Isnil(Right(Pb.Mynode())))
-                        return(Insert(true, Pb.Mynode(), V));
+                        return(Insert(false, Pb.Mynode(), V));
                     else
                         return(Insert(true, P.Mynode(), V));
                 }
-                return(insert(V).first);
             }
-            return P;//shit
+            return(insert(V).first);
         }
         template<class It>
         void insert(It F, It L){
