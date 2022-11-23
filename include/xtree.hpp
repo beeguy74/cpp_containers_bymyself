@@ -178,7 +178,7 @@ namespace ft {
             Tptr operator->() const{
                 return (&**this);
             }
-            iterator operator++(){
+            iterator& operator++(){
                 Inc();//TODO:Inc
                 return (*this);
             }
@@ -187,9 +187,9 @@ namespace ft {
                 ++*this;
                 return (Tmp);
             }
-            iterator operator--(){
+            iterator& operator--(){
                 Dec();
-                return (*this);
+                return *this;
             }
             iterator operator--(int){
                 iterator Tmp = *this;
@@ -334,15 +334,21 @@ namespace ft {
             Init();
             insert(F, L); //TODO: insert
         }
+        Tree(const Myt& X) : Mybase(X.key_comp(), X.get_allocator()){
+            // std::cout << "Copy Constr\n";
+            Init();
+            Copy(X);
+        }
         ~Tree(){
             erase(begin(), end());
             Freenode(Head);
             Head = 0, Size = 0;
         }
         Myt&    operator=(const Myt& X){
+            // std::cout << "operator =  Constr\n";
             if (this != &X){
                 erase(begin(), end());
-                this->comp = X.comp;//shit
+                this->comp = X.comp;
                 Copy(X);
             }
             return (*this);
@@ -676,7 +682,7 @@ namespace ft {
                     Erase(R);
                     throw;
                 }
-                Left(Y) = Head, Right (Y) = Head;
+                Left(Y) = Head, Right(Y) = Head;
                 if (Isnil(R))
                     R = Y;
                 try {
@@ -772,7 +778,7 @@ namespace ft {
                         Lrotate(Parent(Parent(X)));
                     }
                 }
-            }// shit for
+            }
             Color(Root()) = Black;
             return (iterator(Z));
         }
@@ -870,7 +876,7 @@ namespace ft {
         }
 
         Nodeptr Buynode(Nodeptr Parg, char Carg){
-            Nodeptr S = this->Alnod.allocate(1, (void *)0);//shit
+            Nodeptr S = this->Alnod.allocate(1, (void *)0);
             this->Alptr.construct(&Left(S), 0);
             this->Alptr.construct(&Right(S), 0);
             this->Alptr.construct(&Parent(S), Parg);
