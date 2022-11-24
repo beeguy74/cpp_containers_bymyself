@@ -122,7 +122,7 @@ namespace ft {
         static Charref Isnil(Nodeptr P) {
             return((Charref)(*P).Isnil);
         }
-        static Keyref Key(Nodeptr P){//shit
+        static Keyref Key(Nodeptr P){
             return (Kfn()(Value(P)));
         }
         static Nodepref Left(Nodeptr P){
@@ -165,7 +165,6 @@ namespace ft {
         public:
             typedef Bidit<value_type, Dift, Tptr, Reft>     Mybase;
             typedef typename Mybase::iterator_category      iterator_category;
-            // typedef typename Mybase::value_type             value_type;
             typedef typename Mybase::difference_type        difference_type;
             typedef typename Mybase::pointer                pointer;
             typedef typename Mybase::reference              reference;
@@ -179,7 +178,7 @@ namespace ft {
                 return (&**this);
             }
             iterator& operator++(){
-                Inc();//TODO:Inc
+                Inc();
                 return (*this);
             }
             iterator operator++(int){
@@ -206,7 +205,7 @@ namespace ft {
                 if (Isnil(Ptr))
                     Ptr = Right(Ptr);
                 else if (!Isnil(Left(Ptr)))
-                    Ptr = Max(Left(Ptr)); //TODO: Max
+                    Ptr = Max(Left(Ptr));
                 else {
                     Nodeptr P;
                     while (!Isnil(P = Parent(Ptr)) && Ptr == Left(P))
@@ -219,7 +218,7 @@ namespace ft {
                 if (Isnil(Ptr))
                     ;
                 else if (!Isnil(Right(Ptr)))
-                    Ptr = Min(Right(Ptr));//TODO: Min
+                    Ptr = Min(Right(Ptr));
                 else {
                     Nodeptr P;
                     while (!Isnil(P = Parent(Ptr)) && Ptr == Right(P))
@@ -240,7 +239,6 @@ namespace ft {
         public:
             typedef Bidit<value_type, Dift, Ctptr, const_reference>     Mybase;
             typedef typename Mybase::iterator_category      iterator_category;
-            // typedef typename Mybase::value_type             value_type;
             typedef typename Mybase::difference_type        difference_type;
             typedef typename Mybase::pointer                pointer;
             typedef typename Mybase::reference              reference;
@@ -253,7 +251,7 @@ namespace ft {
             Ctptr operator->() const {
                 return(&**this);
             }
-            const_iterator& operator++(){ //Mistake?
+            const_iterator& operator++(){
                 Inc();
                 return (*this);
             }
@@ -271,12 +269,6 @@ namespace ft {
                 --*this;
                 return (Tmp);
             }
-            // bool operator==(const const_iterator& X) const{
-            //     return (Ptr == X.Ptr);
-            // }
-            // bool operator!=(const const_iterator& X) const{
-            //     return (!(*this == X));
-            // }
             void Dec(){
                 if(Isnil(Ptr))
                     Ptr = Right(Ptr);
@@ -327,15 +319,14 @@ namespace ft {
 
         explicit Tree(const key_compare& Parg, const allocator_type& Al)
             : Mybase(Parg, Al){
-                Init();//TODO:Init
+                Init();
             }
         Tree(const value_type *F, const value_type *L, const key_compare& Parg, 
             const allocator_type& Al) : Mybase(Parg, Al) {
             Init();
-            insert(F, L); //TODO: insert
+            insert(F, L);
         }
         Tree(const Myt& X) : Mybase(X.key_comp(), X.get_allocator()){
-            // std::cout << "Copy Constr\n";
             Init();
             Copy(X);
         }
@@ -345,7 +336,6 @@ namespace ft {
             Head = 0, Size = 0;
         }
         Myt&    operator=(const Myt& X){
-            // std::cout << "operator =  Constr\n";
             if (this != &X){
                 erase(begin(), end());
                 this->comp = X.comp;
@@ -381,20 +371,18 @@ namespace ft {
             return(Size);
         }
         size_type max_size() const{
-            // return (this->Alval.max_size());
             return (this->Alnod.max_size());
         }
         bool empty() const{
             return(size() == 0);
         }
         allocator_type get_allocator() const{
-            // return(this->Alval);
             return(this->Alnod);
         }
-        key_compare key_comp() const{//some shit
+        key_compare key_comp() const{
             return (this->comp);
         }
-        value_compare value_comp() const{//some shit
+        value_compare value_comp() const{
             return (value_compare(key_comp()));
         }
         Pairib insert(const value_type& V){
@@ -403,7 +391,7 @@ namespace ft {
             bool Addleft = true;
             while(!Isnil(X)){
                 Y = X;
-                Addleft = this->comp(Kfn()(V), Key(X));//TODO:Kfn
+                Addleft = this->comp(Kfn()(V), Key(X));
                 X = Addleft ? Left(X) : Right(X);
             }
             if (Tr::Multi)
@@ -450,7 +438,6 @@ namespace ft {
                 insert(*F);
         }
         iterator erase(iterator P){
-            // std::cout << "one iterator erase\n" << std::endl;
             if (Isnil(P.Mynode()))
                 throw std::out_of_range("tree iterator");
             Nodeptr X, Xpar;
@@ -518,7 +505,7 @@ namespace ft {
                             W = Right(Xpar);
                         }
                         if (Isnil(W))
-                            X = Xpar; //shit?
+                            X = Xpar;
                         else if (Color(Left(W)) == Black && Color(Right(W)) == Black){
                             Color(W) = Red;
                             X = Xpar;
@@ -546,7 +533,7 @@ namespace ft {
                             W = Left(Xpar);
                         }
                         if (Isnil(W))
-                            X = Xpar; //shit
+                            X = Xpar;
                         else if(Color(Right(W)) == Black && Color(Left(W)) == Black){
                             Color(W) = Red;
                             X = Xpar;
@@ -572,10 +559,9 @@ namespace ft {
             if(0 < Size)
                 --Size;
             return (P);
-        }//shit
+        }
 
         iterator erase(iterator F, iterator L){
-            // std::cout << "iterators erase\n" << std::endl;
             if (size() == 0 || F != begin() || L != end()){
                 while (F != L)
                     erase(F++);
@@ -590,7 +576,6 @@ namespace ft {
         }
 
         size_type erase(const key_type& X){
-            // std::cout << "key_type erase\n" << X << std::endl;
             Pairii P = equal_range(X);
             size_type N = 0;
             Distance(P.first, P.second, N);
@@ -741,7 +726,7 @@ namespace ft {
                 if (Y == Rmost())
                     Rmost () = Z;
             }
-            for (Nodeptr X = Z; Color(Parent(X)) == Red;){//shit for
+            for (Nodeptr X = Z; Color(Parent(X)) == Red;){
                 if (Parent(X) == Left(Parent(Parent(X)))){
                     Y = Right(Parent(Parent(X)));
                     if (Color(Y) == Red){
