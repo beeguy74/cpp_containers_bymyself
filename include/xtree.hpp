@@ -62,7 +62,7 @@ namespace ft {
 
     template<class Tr>inline
     bool operator==(const Tree<Tr>& X, const Tree<Tr>& Y){
-        return (X.size() == Y.size() && equal (X.begin(), X.end(), Y.begin()));
+        return (X.size() == Y.size() && ft::equal(X.begin(), X.end(), Y.begin()));
     }
 
     template<class Tr> inline
@@ -159,46 +159,55 @@ namespace ft {
             rebind<value_type>::other::const_reference
                             const_reference;
 
-        class iterator;
-        friend class iterator;
-        class iterator : public Bidit<value_type, Dift, Tptr, Reft> {
+        // class iterator;
+        // friend class iterator;
+        template<class itTptr,class itReft, bool IsConst>
+        class map_iterator : public Bidit<value_type, Dift, itTptr, itReft> {
         public:
-            typedef Bidit<value_type, Dift, Tptr, Reft>     Mybase;
+            typedef Bidit<value_type, Dift, itTptr, itReft>     Mybase;
             typedef typename Mybase::iterator_category      iterator_category;
             typedef typename Mybase::difference_type        difference_type;
             typedef typename Mybase::pointer                pointer;
             typedef typename Mybase::reference              reference;
-            iterator() : Ptr(0) {}
-            iterator(Nodeptr P) : Ptr(P) {}
-            iterator(const iterator& it) : Ptr(it.Ptr) {}
+            map_iterator() : Ptr(0) {}
+            map_iterator(Nodeptr P) : Ptr(P) {}
+            map_iterator(const map_iterator& it) : Ptr(it.Ptr) {}
+            template<class point, class refer, bool WasConst>
+            map_iterator(const map_iterator<point, refer, WasConst> &it,
+                        typename ft::enable_if<IsConst || !WasConst, bool>::type = 0)
+                        : Ptr(it.base())
+                {}
+            Nodeptr base() const{
+                return Ptr;
+            }
             reference operator*() const{
                 return (Value(Ptr));
             }
-            Tptr operator->() const{
+            itTptr operator->() const{
                 return (&**this);
             }
-            iterator& operator++(){
+            map_iterator& operator++(){
                 Inc();
                 return (*this);
             }
-            iterator operator++(int){
-                iterator Tmp = *this;
+            map_iterator operator++(int){
+                map_iterator Tmp = *this;
                 ++*this;
                 return (Tmp);
             }
-            iterator& operator--(){
+            map_iterator& operator--(){
                 Dec();
                 return *this;
             }
-            iterator operator--(int){
-                iterator Tmp = *this;
+            map_iterator operator--(int){
+                map_iterator Tmp = *this;
                 --*this;
                 return (Tmp);
             }
-            bool operator==(const iterator X) const {
+            bool operator==(const map_iterator X) const {
                 return (Ptr == X.Ptr);
             }
-            bool operator!=(const iterator X) const {
+            bool operator!=(const map_iterator X) const {
                 return (!(*this == X));
             }
             void Dec(){
@@ -233,89 +242,89 @@ namespace ft {
             Nodeptr     Ptr;
         };
 
-        class const_iterator;
-        friend class const_iterator;
-        class const_iterator : public Bidit<value_type, Dift, Ctptr, const_reference> {
-        public:
-            typedef Bidit<value_type, Dift, Ctptr, const_reference>     Mybase;
-            typedef typename Mybase::iterator_category      iterator_category;
-            typedef typename Mybase::difference_type        difference_type;
-            typedef typename Mybase::pointer                pointer;
-            typedef typename Mybase::reference              reference;
-            const_iterator() : Ptr(0) {}
-            const_iterator(Nodeptr P) : Ptr(P) {}
-            const_iterator(const typename Tree<Tr>::iterator X) : Ptr(X.Mynode()) {}
-            const_reference operator*() const {
-                return (Value(Ptr));
-            }
-            Ctptr operator->() const {
-                return(&**this);
-            }
-            const_iterator& operator++(){
-                Inc();
-                return (*this);
-            }
-            const_iterator operator++(int){
-                const_iterator Tmp = *this;
-                ++*this;
-                return (Tmp);
-            }
-            const_iterator& operator--(){
-                Dec();
-                return (*this);
-            }
-            const_iterator operator--(int){
-                const_iterator Tmp = *this;
-                --*this;
-                return (Tmp);
-            }
-            void Dec(){
-                if(Isnil(Ptr))
-                    Ptr = Right(Ptr);
-                else if (!Isnil(Left(Ptr)))
-                    Ptr = Max(Left(Ptr));
-                else {
-                    Nodeptr P;
-                    while (!Isnil(P = Parent(Ptr)) && Ptr == Left(P))
-                        Ptr = P;
-                    if (!Isnil(P))
-                        Ptr = P;
-                }
-            }
-            void Inc(){
-                if (Isnil(Ptr))
-                    ;
-                else if (!Isnil(Right(Ptr)))
-                    Ptr = Min(Right(Ptr));
-                else {
-                    Nodeptr P;
-                    while (!Isnil(P = Parent(Ptr)) && Ptr == Right(P))
-                        Ptr = P;
-                    Ptr = P;
-                }
-            }
-            Nodeptr Mynode() const{
-                return (Ptr);
-            }
+        // class const_iterator;
+        // friend class const_iterator;
+        // class const_iterator : public Bidit<value_type, Dift, Ctptr, const_reference> {
+        // public:
+        //     typedef Bidit<value_type, Dift, Ctptr, const_reference>     Mybase;
+        //     typedef typename Mybase::iterator_category      iterator_category;
+        //     typedef typename Mybase::difference_type        difference_type;
+        //     typedef typename Mybase::pointer                pointer;
+        //     typedef typename Mybase::reference              reference;
+        //     const_iterator() : Ptr(0) {}
+        //     const_iterator(Nodeptr P) : Ptr(P) {}
+        //     const_iterator(const typename Tree<Tr>::iterator X) : Ptr(X.Mynode()) {}
+        //     const_reference operator*() const {
+        //         return (Value(Ptr));
+        //     }
+        //     Ctptr operator->() const {
+        //         return(&**this);
+        //     }
+        //     const_iterator& operator++(){
+        //         Inc();
+        //         return (*this);
+        //     }
+        //     const_iterator operator++(int){
+        //         const_iterator Tmp = *this;
+        //         ++*this;
+        //         return (Tmp);
+        //     }
+        //     const_iterator& operator--(){
+        //         Dec();
+        //         return (*this);
+        //     }
+        //     const_iterator operator--(int){
+        //         const_iterator Tmp = *this;
+        //         --*this;
+        //         return (Tmp);
+        //     }
+        //     void Dec(){
+        //         if(Isnil(Ptr))
+        //             Ptr = Right(Ptr);
+        //         else if (!Isnil(Left(Ptr)))
+        //             Ptr = Max(Left(Ptr));
+        //         else {
+        //             Nodeptr P;
+        //             while (!Isnil(P = Parent(Ptr)) && Ptr == Left(P))
+        //                 Ptr = P;
+        //             if (!Isnil(P))
+        //                 Ptr = P;
+        //         }
+        //     }
+        //     void Inc(){
+        //         if (Isnil(Ptr))
+        //             ;
+        //         else if (!Isnil(Right(Ptr)))
+        //             Ptr = Min(Right(Ptr));
+        //         else {
+        //             Nodeptr P;
+        //             while (!Isnil(P = Parent(Ptr)) && Ptr == Right(P))
+        //                 Ptr = P;
+        //             Ptr = P;
+        //         }
+        //     }
+        //     Nodeptr Mynode() const{
+        //         return (Ptr);
+        //     }
 
-            friend bool    operator==(const const_iterator& lhs, const const_iterator& rhs){
-                return (lhs.Ptr == rhs.Ptr);
-            }
+        //     friend bool    operator==(const const_iterator& lhs, const const_iterator& rhs){
+        //         return (lhs.Ptr == rhs.Ptr);
+        //     }
 
-            friend bool    operator!=(const const_iterator& lhs, const const_iterator& rhs){
-                return !(lhs.Ptr == rhs.Ptr);
-            }
-        protected:
-            Nodeptr Ptr;
-        };
+        //     friend bool    operator!=(const const_iterator& lhs, const const_iterator& rhs){
+        //         return !(lhs.Ptr == rhs.Ptr);
+        //     }
+        // protected:
+        //     Nodeptr Ptr;
+        // };
 
-        typedef ft::reverse_iterator<iterator>
-            reverse_iterator;
-        typedef ft::reverse_iterator<const_iterator>
-            const_reverse_iterator;
-        typedef ft::pair<iterator, bool>        Pairib;
-        typedef ft::pair<iterator, iterator>    Pairii;
-        typedef pair<const_iterator, const_iterator> Paircc;
+        typedef map_iterator<Tptr, Reft, false>             iterator;
+        typedef map_iterator<Ctptr, const_reference, true>  const_iterator;
+        typedef ft::reverse_iterator<iterator>              reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator>        const_reverse_iterator;
+        typedef ft::pair<iterator, bool>                    Pairib;
+        typedef ft::pair<iterator, iterator>                Pairii;
+        typedef pair<const_iterator, const_iterator>        Paircc;
 
         explicit Tree(const key_compare& Parg, const allocator_type& Al)
             : Mybase(Parg, Al){
@@ -410,7 +419,8 @@ namespace ft {
                     return(Pairib(P,false));
             }
         }
-        iterator insert(iterator P, const value_type& V){
+        template<class itTptr,class itReft, bool IsConst>
+        map_iterator<itTptr, itReft, IsConst>   insert(map_iterator<itTptr, itReft, IsConst> P, const value_type &V){
             if (size() == 0)
                 return (Insert(true, Head, V));
             else if (P == begin()){
@@ -422,7 +432,7 @@ namespace ft {
                     return(Insert(false, Rmost(), V));
             }
             else {
-                iterator Pb = P;
+                map_iterator<itTptr, itReft, IsConst> Pb = P;
                 if (this->comp(Key((--Pb).Mynode()), Kfn()(V)) && this->comp(Kfn()(V), Key(P.Mynode()))){
                     if (Isnil(Right(Pb.Mynode())))
                         return(Insert(false, Pb.Mynode(), V));
@@ -437,7 +447,8 @@ namespace ft {
             for (; F != L; ++F)
                 insert(*F);
         }
-        iterator erase(iterator P){
+        template<class itTptr,class itReft, bool IsConst>
+        map_iterator<itTptr, itReft, IsConst>   erase(map_iterator<itTptr, itReft, IsConst> P){
             if (Isnil(P.Mynode()))
                 throw std::out_of_range("tree iterator");
             Nodeptr X, Xpar;
@@ -561,7 +572,11 @@ namespace ft {
             return (P);
         }
 
-        iterator erase(iterator F, iterator L){
+        template<class itTptr,class itReft, bool IsConst, class secPtr,class secReft, bool secConst>
+        map_iterator<itTptr, itReft, IsConst>   erase(
+                map_iterator<itTptr, itReft, IsConst> F,
+                map_iterator<secPtr, secReft, secConst> L
+            ){
             if (size() == 0 || F != begin() || L != end()){
                 while (F != L)
                     erase(F++);

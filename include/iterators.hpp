@@ -136,7 +136,10 @@ namespace ft {
             Ptrit(const Ptrit<T, D, Pt, Rt, Pt2, Rt2, IsConst> &X) : current(X.base()) {}
 
             template<class c_pointer, class c_reference, bool WasConst>
-            Ptrit(const Ptrit<T, D, c_pointer, c_reference, Pt2, Rt2, WasConst> &X, typename ft::enable_if<IsConst || !WasConst, bool>::type = 0) : current(X.base()) {}
+            Ptrit(const Ptrit<T, D, c_pointer, c_reference, Pt2, Rt2, WasConst> &X,
+                    typename ft::enable_if<IsConst || !WasConst, bool>::type = 0)
+                    : current(X.base())
+                {}
             // template<class c_pointer, class c_reference>
             // operator Ptrit<T, D, c_pointer, c_reference, Pt2, Rt2>() const{
             //     return (c_pointer(current));

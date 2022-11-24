@@ -89,14 +89,6 @@ namespace ft{
     void swap(map<Key,T,Compare,Allocator>& lhs, map<Key,T,Compare,Allocator>& rhs){
         lhs.swap(rhs);
     }
-
-    template <class Key, class T, class Compare, class Allocator>
-    bool operator==(const map<Key,T,Compare,Allocator>& lhs, const map<Key,T,Compare,Allocator>& rhs){
-        if (lhs.size() != rhs.size())
-            return false;
-        return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
-    }
-    
 }
 
 #endif

@@ -43,9 +43,9 @@ namespace ft {
         typedef typename Mybase::const_pointer              const_pointer;
         typedef typename Mybase::reference                  reference;
         typedef typename Mybase::const_reference            const_reference;
-        typedef typename Mybase::iterator                   iterator;
+        typedef typename Mybase::const_iterator                   iterator;
         typedef typename Mybase::const_iterator             const_iterator;
-        typedef typename Mybase::reverse_iterator           reverse_iterator;
+        typedef typename Mybase::const_reverse_iterator           reverse_iterator;
         typedef typename Mybase::const_reverse_iterator     const_reverse_iterator;
         typedef typename Mybase::value_type                 value_type;
 
@@ -74,15 +74,6 @@ namespace ft {
     void swap(set<Key,Compare,Allocator>& lhs, set<Key,Compare,Allocator>& rhs){
         lhs.swap(rhs);
     }
-
-    // template <class Key, class Compare, class Allocator>
-    // bool operator==(const set<Key,Compare,Allocator>& lhs, const set<Key,Compare,Allocator>& rhs)
-    // {
-    //     if (lhs.size() != rhs.size())
-    //         return false;
-    //     return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
-    // }
-    
 }
 
 #endif
