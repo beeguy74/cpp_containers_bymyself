@@ -67,20 +67,21 @@ namespace ft
             if (Buy(X.size()))
                 Last = Ucopy(X.begin(), X.end(), First);
         }
+        // template<class It>
+        // vector(It F, It L) {
+        //     Construct(F, L, ft::Iter_cat(F));
+        // }
         template<class It>
-        vector(It F, It L) {
+        vector(It F, It L, const A& Al = allocator_type(),
+            typename ft::enable_if<!is_integral<It>::value, bool>::type = 0) : Alval(Al)  {
             Construct(F, L, ft::Iter_cat(F));
         }
-        template<class It>
-        vector(It F, It L, const A& Al) : Alval(Al)  {
-            Construct(F, L, ft::Iter_cat(F));
-        }
-        template<class It>
-        void Construct(It F, It L, Int_iterator_tag){
-            size_type N = (size_type)F;
-            if (Buy(N))
-                Last = Ufill(First, N, (T)L);
-        }
+        // template<class It>
+        // void Construct(It F, It L, Int_iterator_tag){
+        //     size_type N = (size_type)F;
+        //     if (Buy(N))
+        //         Last = Ufill(First, N, (T)L);
+        // }
         template<class It>
         void Construct(It F, It L, input_iterator_tag){
             Buy(0);
