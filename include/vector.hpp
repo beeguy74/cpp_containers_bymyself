@@ -220,7 +220,8 @@ namespace ft
             erase(end() - 1);
         }
         template<class It>
-        void    assign(It F, It L){
+        void    assign(It F, It L,
+                typename ft::enable_if<!is_integral<It>::value, bool>::type = 0){
             Assign(F, L, ft::Iter_cat(F));
         }
         template<class It>
@@ -296,7 +297,8 @@ namespace ft
             }
         }
         template<class It>
-        void    insert(iterator P, It F, It L){
+        void    insert(iterator P, It F, It L,
+                typename ft::enable_if<!is_integral<It>::value, bool>::type = 0){
             Insert(P, F, L, ft::Iter_cat(F));
         }
         template<class It>
