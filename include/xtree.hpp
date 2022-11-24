@@ -443,10 +443,11 @@ namespace ft {
             return(insert(V).first);
         }
         template<class It>
-        void insert(It F, It L){
+        void insert(It F, It L, typename ft::enable_if<!is_integral<It>::value, bool>::type = 0){
             for (; F != L; ++F)
                 insert(*F);
         }
+
         template<class itTptr,class itReft, bool IsConst>
         map_iterator<itTptr, itReft, IsConst>   erase(map_iterator<itTptr, itReft, IsConst> P){
             if (Isnil(P.Mynode()))
