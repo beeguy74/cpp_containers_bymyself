@@ -6,7 +6,7 @@
 /*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 14:16:08 by tphung            #+#    #+#             */
-/*   Updated: 2022/11/25 17:58:35 by tphung           ###   ########.fr       */
+/*   Updated: 2022/11/25 18:39:42 by tphung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <string>
 #include <stack>
 #include <vector>
+#include <map>
 #include "map.hpp"
 #include "stack.hpp"
 #include "vector.hpp"
@@ -34,3 +35,4 @@
 
 int vector_test(std::string &message);
 int stack_test(std::string &message);
+int map_test(std::string &message);
