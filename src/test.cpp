@@ -1,9 +1,4 @@
-#include <iostream>
-#include <string>
-#include "stack.hpp"
-#include <stack>
-#include <vector>
-#include "map.hpp"
+#include "tests.hpp"
 
 int main(int argc, char** argv) {
     ft::vector<int>::iterator iter;
@@ -12,52 +7,20 @@ int main(int argc, char** argv) {
     const_iter = iter;
     // should not
     // iter = const_iter;
-	if (argc != 2)
+	if (argc != 2 )
 	{
 		std::cerr << "Usage: ./test some_data" << std::endl;
 		std::cerr << "Provide a some_data please" << std::endl;
 		return 1;
 	}
+    std::string data = argv[1];
+    if (data.length() < 5){
+		std::cerr << "data length must be 5 at least" << std::endl;
+		return 1;
+    }
     std::cout << "\t" << "My vector" << "\t" << "Std vector" << std::endl;
 
-    std::string data = argv[1];
-    ft::vector<char>    my_vec;
-    std::vector<char>   std_vec;
-    ft::map<std::string, std::string>   ft_map ;
-
-    for (unsigned long i=0; i < data.length(); ++i){
-        my_vec.push_back(data[i]);
-        std_vec.push_back(data[i]);
-    }
-    while (!my_vec.empty()) {
-        std::cout << "\t" << (my_vec.back()) << "\t\t" << (std_vec.back()) << std::endl;
-        my_vec.pop_back();
-        std_vec.pop_back();
-    }
-    ft::stack<char>     my_stack;
-    ft::stack<char>      rhs;
-    std::stack<char>    std_stack;
-    std::cout << "\t" << "My stack" << "\t" << "Std stack" << std::endl;
-    for (unsigned long i=0; i < data.length(); ++i){
-        my_stack.push(data[i]);
-        rhs.push(data[i]);
-        std_stack.push(data[i]);
-    }
-    std::cout << "Operator== test\n";
-    using namespace ft;
-    std::cout << "stacks are equal: " << ((my_stack == rhs) ? "true" : "false") << std::endl;
-    rhs.push('!');
-    std::cout << "stacks are different after push to right: " << ((my_stack != rhs) ? "true" : "false") << std::endl;
-    std::cout << "left is less: " << ((my_stack < rhs) ? "true" : "false") << std::endl;
-    std::cout << "right is bigger: " << ((rhs > my_stack) ? "true" : "false") << std::endl;
-    std::cout << "left is bigger or equal: " << ((my_stack >= rhs) ? "true" : "false") << std::endl;
-    std::cout << "right is less or equal: " << ((rhs <= my_stack) ? "true" : "false") << std::endl;
-    std::cout << "My stack:\tStd stack:\n";
-    while (!my_stack.empty()) {
-        std::cout << "\t" << my_stack.top() << "\t\t" << std_stack.top() << std::endl;
-        my_stack.pop();
-        std_stack.pop();
-    }
+    vector_test(data);
     return 0;
 }
 
