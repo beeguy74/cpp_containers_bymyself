@@ -6,7 +6,7 @@
 /*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:14:38 by tphung            #+#    #+#             */
-/*   Updated: 2022/11/25 17:49:55 by tphung           ###   ########.fr       */
+/*   Updated: 2022/11/25 18:01:07 by tphung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ void all_methods(ft::vector<char> &my, std::string &message){
 
 int vector_test(std::string &message){
     ft::vector<char> my;
-    std::vector<char> st(2);
+    std::vector<char> st;
     std::cout << std::endl << VECTOR << std::endl;
     all_methods(my, message);
     assign(my, st, message);

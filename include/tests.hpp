@@ -6,7 +6,7 @@
 /*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 14:16:08 by tphung            #+#    #+#             */
-/*   Updated: 2022/11/25 16:40:17 by tphung           ###   ########.fr       */
+/*   Updated: 2022/11/25 17:58:35 by tphung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,3 +33,4 @@
 #define END "\033[1;34m############################\033[0m"
 
 int vector_test(std::string &message);
+int stack_test(std::string &message);

@@ -21,6 +21,7 @@ int main(int argc, char** argv) {
     std::cout << "\t" << "My vector" << "\t" << "Std vector" << std::endl;
 
     vector_test(data);
+    stack_test(data);
     return 0;
 }
 
