@@ -23,6 +23,7 @@ int main(int argc, char** argv) {
     vector_test(data);
     stack_test(data);
     map_test(data);
+    set_test(data);
     return 0;
 }
 

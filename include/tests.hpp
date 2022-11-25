@@ -6,7 +6,7 @@
 /*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 14:16:08 by tphung            #+#    #+#             */
-/*   Updated: 2022/11/25 18:39:42 by tphung           ###   ########.fr       */
+/*   Updated: 2022/11/25 21:44:09 by tphung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 #include <stack>
 #include <vector>
 #include <map>
+#include <set>
 #include "map.hpp"
 #include "stack.hpp"
 #include "vector.hpp"
+#include "set.hpp"
 
 #define RED "\033[1;31m"
 #define GREEN "\033[1;32m"
@@ -36,3 +38,4 @@
 int vector_test(std::string &message);
 int stack_test(std::string &message);
 int map_test(std::string &message);
+int set_test(std::string &message);

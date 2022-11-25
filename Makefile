@@ -1,6 +1,6 @@
 NAME	=		test	
 
-FILES	=		test vector_tests stack_test map_tests
+FILES	=		test vector_tests stack_test map_tests set_tests
 HEADERS =		stack
 
 CXX		=		c++
