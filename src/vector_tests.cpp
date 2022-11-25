@@ -6,7 +6,7 @@
 /*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:14:38 by tphung            #+#    #+#             */
-/*   Updated: 2022/11/25 18:01:07 by tphung           ###   ########.fr       */
+/*   Updated: 2022/11/25 21:56:34 by tphung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,14 +132,6 @@ void relation_and_construct(ft::vector<char> &my, std::vector<char> &st, std::st
         std::cout << OK << name << std::endl;
     else std::cout << KO << name << std::endl;
 
-    my.insert(my.begin(), 5, 'G');
-    st.insert(st.begin(), 5, 'G');
-
-    name = "greater";
-
-    if ( (my > copy_my) && (st > copy_st) )
-        std::cout << OK << name << std::endl;
-    else std::cout << KO << name << std::endl;
     st.clear();
     my.clear();
 }
