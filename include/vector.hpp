@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vector.hpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/25 13:39:08 by tphung            #+#    #+#             */
+/*   Updated: 2022/11/25 13:48:00 by tphung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 
@@ -9,42 +21,28 @@
 
 namespace ft
 {
-    // template<class T, class A>
-    // class Vector_val {
-    //     protected:
-    //     Vector_val(A Al = A()) : Alval(Al) {}
-    //     typedef typename A::template rebind<T>::other Alty;
-    //     Alty Alval;
-    // };
-
     template < class T, class Ax = std::allocator<T> >
     class vector {
-    // class vector : public Vector_val<T, Ax> {
     public:
-        typedef vector<T, Ax>               Myt;
-        // typedef Vector_val<T, Ax>           Mybase;
+        typedef vector<T, Ax>                           Myt;
         typedef typename Ax::template rebind<T>::other  Alty;
-        typedef Alty       A;
-        typedef A                           allocator_type;
-        typedef typename A::size_type       size_type;
-        typedef typename A::difference_type difference_type;
-        typedef typename A::pointer         Tptr;
-        typedef typename A::const_pointer   Ctptr;
-        typedef Tptr                        pointer;
-        typedef Ctptr                       const_pointer;
-        typedef typename A::reference       reference;
-        typedef typename A::const_reference const_reference;
-        typedef typename A::value_type      value_type;
+        typedef Alty                                    A;
+        typedef A                                       allocator_type;
+        typedef typename A::size_type                   size_type;
+        typedef typename A::difference_type             difference_type;
+        typedef typename A::pointer                     Tptr;
+        typedef typename A::const_pointer               Ctptr;
+        typedef Tptr                                    pointer;
+        typedef Ctptr                                   const_pointer;
+        typedef typename A::reference                   reference;
+        typedef typename A::const_reference             const_reference;
+        typedef typename A::value_type                  value_type;
         typedef Ptrit<value_type, difference_type, Tptr, reference,
-            Tptr, reference, false>                iterator;
+            Tptr, reference, false>                     iterator;
         typedef Ptrit<value_type, difference_type, Ctptr, const_reference,
-            Tptr, reference, true>                const_iterator;
-        typedef ft::reverse_iterator<iterator>  reverse_iterator;
+            Tptr, reference, true>                      const_iterator;
+        typedef ft::reverse_iterator<iterator>          reverse_iterator;
         typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
-        // operator const_iterator() const{
-        //     iterator It;
-        //     return const_iterator(It);
-        // }
         vector() {
             Buy(0);
         }
@@ -67,28 +65,18 @@ namespace ft
             if (Buy(X.size()))
                 Last = Ucopy(X.begin(), X.end(), First);
         }
-        // template<class It>
-        // vector(It F, It L) {
-        //     Construct(F, L, ft::Iter_cat(F));
-        // }
         template<class It>
         vector(It F, It L, const A& Al = allocator_type(),
             typename ft::enable_if<!is_integral<It>::value, bool>::type = 0) : Alval(Al)  {
             Construct(F, L, ft::Iter_cat(F));
         }
-        // template<class It>
-        // void Construct(It F, It L, Int_iterator_tag){
-        //     size_type N = (size_type)F;
-        //     if (Buy(N))
-        //         Last = Ufill(First, N, (T)L);
-        // }
         template<class It>
         void Construct(It F, It L, input_iterator_tag){
             Buy(0);
             insert(begin(), F, L);
         }
         ~vector (){
-            Clear();//Todo: Clear
+            Clear();
         }
         Myt&    operator=(const Myt& X){
             if (this == &X)
@@ -118,7 +106,7 @@ namespace ft
             if (N <= capacity())
                 return;
             if (max_size() < N)
-                Xlen(); //TODO Xlen
+                Xlen();
             else if(capacity() < N){
                 pointer Q= Alval.allocate(N, (void*)0);
                 try {
@@ -313,7 +301,7 @@ namespace ft
         template<class It>
         void    Insert(iterator P, It F, It L, forward_iterator_tag){
             size_type   M = 0;
-            Distance(F, L, M);//TODO: Distance
+            Distance(F, L, M);
             size_type N = capacity();
             if (M == 0)
                 ;
@@ -366,7 +354,7 @@ namespace ft
                 ft::copy_backward(P, Oend - M, Oend);
                 ft::copy(F, L, P);
             }
-        }
+        }//function Insert
         iterator    erase(iterator P){
             ft::copy(P + 1, end(), P);
             Destroy(Last - 1, Last);
@@ -392,7 +380,7 @@ namespace ft
         }
         void    swap(Myt& X){
             if (Alval == X.Alval){
-                ft::swap(First, X.First); //TODO: swap
+                ft::swap(First, X.First);
                 ft::swap(Last, X.Last);
                 ft::swap(End, X.End);
             }
@@ -402,7 +390,6 @@ namespace ft
                 X = Ts;
             }
         }
-
 
     protected:
         pointer First, Last, End;
@@ -461,7 +448,7 @@ namespace ft
         void Xran() const{
             throw std::out_of_range("vector<T> subscript");
         }
-    };
+    };//class vector
 
     template<class T, class A> inline
     bool    operator==(const vector<T, A>& X, const vector<T, A>& Y){
@@ -491,6 +478,6 @@ namespace ft
     void    swap(vector<T, A>& X, vector<T, A>& Y){
         X.swap(Y);
     }
-}
+}//namespace ft
 
 #endif

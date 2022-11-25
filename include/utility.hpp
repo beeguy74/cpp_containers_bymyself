@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utility.hpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/25 13:47:21 by tphung            #+#    #+#             */
+/*   Updated: 2022/11/25 13:47:44 by tphung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef _UTILITY_H_
 #define _UTILITY_H_
 
@@ -13,38 +25,37 @@ namespace ft
         pair(const T1 &V1, const T2 &V2) : first(V1), second(V2) {}
         template<class U1, class U2>
             pair(const pair<U1, U2> &X) : first(X.first), second(X.second) {}
-    };
+    };//struct pair
 
+    template<class T1, class T2> inline
+    pair<T1, T2>    make_pair(const T1 &X, const T2 &Y){
+        return (pair<T1, T2>(X, Y));
+    }
     template<class T1, class T2> inline 
-        bool    operator==(const pair<T1,T2> &X, const pair<T1, T2> &Y){
-            return (X.first == Y.first && X.second == Y.second);
-        }
+    bool    operator==(const pair<T1,T2> &X, const pair<T1, T2> &Y){
+        return (X.first == Y.first && X.second == Y.second);
+    }
     template<class T1, class T2> inline
-        bool    operator!=(const pair<T1,T2> &X, const pair<T1, T2> &Y){
-            return (!(X == Y));
-        }
+    bool    operator!=(const pair<T1,T2> &X, const pair<T1, T2> &Y){
+        return (!(X == Y));
+    }
     template<class T1, class T2> inline
-        bool    operator<(const pair<T1,T2> &X, const pair<T1, T2> &Y){
-            return (X.first < Y.first || 
-                (!(Y.first < X.first) && X.second < Y.second));
-        }
+    bool    operator<(const pair<T1,T2> &X, const pair<T1, T2> &Y){
+        return (X.first < Y.first || 
+            (!(Y.first < X.first) && X.second < Y.second));
+    }
     template<class T1, class T2> inline
-        bool    operator>(const pair<T1,T2> &X, const pair<T1, T2> &Y){
-            return (Y < X);
-        }
+    bool    operator>(const pair<T1,T2> &X, const pair<T1, T2> &Y){
+        return (Y < X);
+    }
     template<class T1, class T2> inline
-        bool    operator<=(const pair<T1,T2> &X, const pair<T1, T2> &Y){
-            return (!(Y < X));
-        }
+    bool    operator<=(const pair<T1,T2> &X, const pair<T1, T2> &Y){
+        return (!(Y < X));
+    }
     template<class T1, class T2> inline
-        bool    operator>=(const pair<T1,T2> &X, const pair<T1, T2> &Y){
-            return (!(X < Y));
-        }
-    template<class T1, class T2> inline
-        pair<T1, T2>    make_pair(const T1 &X, const T2 &Y){
-            return (pair<T1, T2>(X, Y));
-        }
-
+    bool    operator>=(const pair<T1,T2> &X, const pair<T1, T2> &Y){
+        return (!(X < Y));
+    }
     template<class InIt, class D> inline
     void    advance(InIt& I, D N){
         Advance(I, N, Iter_cat(I));

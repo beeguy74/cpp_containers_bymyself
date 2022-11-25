@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set.hpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/25 13:44:40 by tphung            #+#    #+#             */
+/*   Updated: 2022/11/25 13:45:25 by tphung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef _SET_H_
 # define _SET_H_
 
@@ -24,7 +36,7 @@ namespace ft {
         Tset_traits() : comp() {}
         Tset_traits(Pr Parg) : comp(Parg) {}
         Pr  comp;
-    };
+    };//class Tset_traits
 
     template<class K,
             class Pr = std::less<K>,
@@ -43,9 +55,9 @@ namespace ft {
         typedef typename Mybase::const_pointer              const_pointer;
         typedef typename Mybase::reference                  reference;
         typedef typename Mybase::const_reference            const_reference;
-        typedef typename Mybase::const_iterator                   iterator;
+        typedef typename Mybase::const_iterator             iterator;
         typedef typename Mybase::const_iterator             const_iterator;
-        typedef typename Mybase::const_reverse_iterator           reverse_iterator;
+        typedef typename Mybase::const_reverse_iterator     reverse_iterator;
         typedef typename Mybase::const_reverse_iterator     const_reverse_iterator;
         typedef typename Mybase::value_type                 value_type;
 
@@ -68,7 +80,7 @@ namespace ft {
             for (; F != L; ++F)
                 this->insert (*F);
         }
-    };
+    };//class set
 
     template <class Key, class Compare, class Allocator>
     void swap(set<Key,Compare,Allocator>& lhs, set<Key,Compare,Allocator>& rhs){

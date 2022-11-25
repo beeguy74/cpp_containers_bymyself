@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   xtree.hpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/25 13:48:10 by tphung            #+#    #+#             */
+/*   Updated: 2022/11/25 13:57:23 by tphung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef _XTREE_H_
 # define _XTREE_H_
 
@@ -8,13 +20,11 @@ namespace ft {
     template<class Tr>
     class Tree_nod : public Tr {
     protected:
-        typedef typename Tr::allocator_type  allocator_type;
-        typedef typename Tr::key_compare    key_compare;
-        typedef typename Tr::value_type     value_type;
+        typedef typename Tr::allocator_type     allocator_type;
+        typedef typename Tr::key_compare        key_compare;
+        typedef typename Tr::value_type         value_type;
         typedef typename allocator_type::template 
-            rebind<void>::other::pointer    Genptr;
-        struct          Node;
-        friend struct   Node;
+            rebind<void>::other::pointer        Genptr;
         struct Node {
             Genptr      Left, Parent, Right;
             value_type  Value;
@@ -25,7 +35,7 @@ namespace ft {
             : Tr(Parg), Alnod(Al) {}
         typename allocator_type::template
             rebind<Node>::other     Alnod;
-    };
+    };//class Tree_nod
 
     template<class Tr>
     class Tree_ptr : public Tree_nod<Tr> {
@@ -39,7 +49,7 @@ namespace ft {
             : Tree_nod<Tr>(Parg, Al) , Alptr(Al) {}
         typename allocator_type::template
             rebind<Nodeptr>::other              Alptr;
-    };
+    };//class Tree_ptr
 
     template<class Tr>
     class Tree_val : public Tree_ptr<Tr> {
@@ -49,7 +59,7 @@ namespace ft {
         Tree_val(const key_compare Parg, allocator_type Al)
             : Tree_ptr<Tr>(Parg, Al), Alval(Al) {}
         allocator_type  Alval;
-    };
+    };//class Tree_val
 
 
     template<class Tr>
@@ -95,26 +105,26 @@ namespace ft {
     public:
         typedef Tree<Tr>        Myt;
         typedef Tree_val<Tr>    Mybase;
-        typedef typename Tr::key_type       key_type;
-        typedef typename Tr::key_compare    key_compare;
-        typedef typename Tr::value_compare  value_compare;
-        typedef typename Tr::value_type     value_type;
-        typedef typename Tr::allocator_type allocator_type;
+        typedef typename Tr::key_type                   key_type;
+        typedef typename Tr::key_compare                key_compare;
+        typedef typename Tr::value_compare              value_compare;
+        typedef typename Tr::value_type                 value_type;
+        typedef typename Tr::allocator_type             allocator_type;
     protected:
-        typedef typename Tree_nod<Tr>::Genptr   Genptr;
-        typedef typename Tree_nod<Tr>::Node     Node;
-        typedef typename Tr::Kfn            Kfn;
+        typedef typename Tree_nod<Tr>::Genptr           Genptr;
+        typedef typename Tree_nod<Tr>::Node             Node;
+        typedef typename Tr::Kfn                        Kfn;
+        typedef typename allocator_type::template
+            rebind<Node>::other::pointer                Nodeptr;
+        typedef typename allocator_type::template
+            rebind<Nodeptr>::other::reference           Nodepref;
+        typedef typename allocator_type::template
+            rebind<key_type>::other::const_reference    Keyref;
+        typedef typename allocator_type::template
+            rebind<char>::other::reference              Charref;
+        typedef typename allocator_type::template
+            rebind<value_type>::other::reference        Vref;
         enum Redbl {Red, Black};
-        typedef typename allocator_type::template
-            rebind<Node>::other::pointer      Nodeptr;
-        typedef typename allocator_type::template
-            rebind<Nodeptr>::other::reference Nodepref;
-        typedef typename allocator_type::template
-            rebind<key_type>::other::const_reference  Keyref;
-        typedef typename allocator_type::template
-            rebind<char>::other::reference    Charref;
-        typedef typename allocator_type::template
-            rebind<value_type>::other::reference  Vref;
 
         static Charref Color(Nodeptr P) {
             return ((Charref)(*P).Color);
@@ -138,29 +148,22 @@ namespace ft {
             return ((Vref)(*P).Value);
         }
     public:
-        typedef typename allocator_type::size_type
-                            size_type;
+        typedef typename allocator_type::size_type      size_type;
         typedef typename allocator_type::difference_type
-                            Dift;
-        typedef Dift        difference_type;
+                                                        Dift;
+        typedef Dift                                    difference_type;
         typedef typename allocator_type::template
-            rebind<value_type>::other::pointer
-                            Tptr;
+            rebind<value_type>::other::pointer          Tptr;
         typedef typename allocator_type::template
-            rebind<value_type>::other::const_pointer
-                            Ctptr;
+            rebind<value_type>::other::const_pointer    Ctptr;
         typedef typename allocator_type::template
-            rebind<value_type>::other::reference
-                            Reft;
-        typedef Tptr        pointer;
-        typedef Ctptr       const_pointer;
-        typedef Reft        reference;
+            rebind<value_type>::other::reference        Reft;
+        typedef Tptr                                    pointer;
+        typedef Ctptr                                   const_pointer;
+        typedef Reft                                    reference;
         typedef typename allocator_type::template
-            rebind<value_type>::other::const_reference
-                            const_reference;
+            rebind<value_type>::other::const_reference  const_reference;
 
-        // class iterator;
-        // friend class iterator;
         template<class itTptr,class itReft, bool IsConst>
         class map_iterator : public Bidit<value_type, Dift, itTptr, itReft> {
         public:
@@ -240,83 +243,7 @@ namespace ft {
             }
         protected:
             Nodeptr     Ptr;
-        };
-
-        // class const_iterator;
-        // friend class const_iterator;
-        // class const_iterator : public Bidit<value_type, Dift, Ctptr, const_reference> {
-        // public:
-        //     typedef Bidit<value_type, Dift, Ctptr, const_reference>     Mybase;
-        //     typedef typename Mybase::iterator_category      iterator_category;
-        //     typedef typename Mybase::difference_type        difference_type;
-        //     typedef typename Mybase::pointer                pointer;
-        //     typedef typename Mybase::reference              reference;
-        //     const_iterator() : Ptr(0) {}
-        //     const_iterator(Nodeptr P) : Ptr(P) {}
-        //     const_iterator(const typename Tree<Tr>::iterator X) : Ptr(X.Mynode()) {}
-        //     const_reference operator*() const {
-        //         return (Value(Ptr));
-        //     }
-        //     Ctptr operator->() const {
-        //         return(&**this);
-        //     }
-        //     const_iterator& operator++(){
-        //         Inc();
-        //         return (*this);
-        //     }
-        //     const_iterator operator++(int){
-        //         const_iterator Tmp = *this;
-        //         ++*this;
-        //         return (Tmp);
-        //     }
-        //     const_iterator& operator--(){
-        //         Dec();
-        //         return (*this);
-        //     }
-        //     const_iterator operator--(int){
-        //         const_iterator Tmp = *this;
-        //         --*this;
-        //         return (Tmp);
-        //     }
-        //     void Dec(){
-        //         if(Isnil(Ptr))
-        //             Ptr = Right(Ptr);
-        //         else if (!Isnil(Left(Ptr)))
-        //             Ptr = Max(Left(Ptr));
-        //         else {
-        //             Nodeptr P;
-        //             while (!Isnil(P = Parent(Ptr)) && Ptr == Left(P))
-        //                 Ptr = P;
-        //             if (!Isnil(P))
-        //                 Ptr = P;
-        //         }
-        //     }
-        //     void Inc(){
-        //         if (Isnil(Ptr))
-        //             ;
-        //         else if (!Isnil(Right(Ptr)))
-        //             Ptr = Min(Right(Ptr));
-        //         else {
-        //             Nodeptr P;
-        //             while (!Isnil(P = Parent(Ptr)) && Ptr == Right(P))
-        //                 Ptr = P;
-        //             Ptr = P;
-        //         }
-        //     }
-        //     Nodeptr Mynode() const{
-        //         return (Ptr);
-        //     }
-
-        //     friend bool    operator==(const const_iterator& lhs, const const_iterator& rhs){
-        //         return (lhs.Ptr == rhs.Ptr);
-        //     }
-
-        //     friend bool    operator!=(const const_iterator& lhs, const const_iterator& rhs){
-        //         return !(lhs.Ptr == rhs.Ptr);
-        //     }
-        // protected:
-        //     Nodeptr Ptr;
-        // };
+        };//class map_iterator
 
         typedef map_iterator<Tptr, Reft, false>             iterator;
         typedef map_iterator<Ctptr, const_reference, true>  const_iterator;
@@ -329,7 +256,7 @@ namespace ft {
         explicit Tree(const key_compare& Parg, const allocator_type& Al)
             : Mybase(Parg, Al){
                 Init();
-            }
+        }
         Tree(const value_type *F, const value_type *L, const key_compare& Parg, 
             const allocator_type& Al) : Mybase(Parg, Al) {
             Init();
@@ -418,7 +345,7 @@ namespace ft {
                 else
                     return(Pairib(P,false));
             }
-        }
+        }//function insert
         template<class itTptr,class itReft, bool IsConst>
         map_iterator<itTptr, itReft, IsConst>   insert(map_iterator<itTptr, itReft, IsConst> P, const value_type &V){
             if (size() == 0)
@@ -441,7 +368,7 @@ namespace ft {
                 }
             }
             return(insert(V).first);
-        }
+        }//function insert
         template<class It>
         void insert(It F, It L, typename ft::enable_if<!is_integral<It>::value, bool>::type = 0){
             for (; F != L; ++F)
@@ -571,7 +498,7 @@ namespace ft {
             if(0 < Size)
                 --Size;
             return (P);
-        }
+        }//function erase
 
         template<class itTptr,class itReft, bool IsConst, class secPtr,class secReft, bool secConst>
         map_iterator<itTptr, itReft, IsConst>   erase(
@@ -590,7 +517,6 @@ namespace ft {
                 return (begin());
             }
         }
-
         size_type erase(const key_type& X){
             Pairii P = equal_range(X);
             size_type N = 0;
@@ -598,49 +524,39 @@ namespace ft {
             erase(P.first, P.second);
             return (N);
         }
-
         void erase(const key_type *F, const key_type *L){
             while (F != L)
                 erase(*F++);
         }
-
         void clear(){
             erase(begin(), end());
         }
-
         iterator find(const key_type& Kv){
             iterator P = lower_bound(Kv);
             return (P == end() || this->comp(Kv, Key(P.Mynode())) ? end() : P);
         }
-
         const_iterator find(const key_type& Kv) const{
             const_iterator P = lower_bound(Kv);
             return (P == end() || this->comp(Kv, Key(P.Mynode())) ? end() : P);
         }
-
         size_type count(const key_type& Kv) const{
             Paircc Ans = equal_range(Kv);
             size_type N = 0;
             Distance(Ans.first, Ans.second, N);
             return (N);
         }
-
         iterator lower_bound(const key_type&Kv){
             return (iterator(Lbound(Kv)));
         }
-        
         const_iterator lower_bound(const key_type& Kv) const{
             return(const_iterator(Lbound(Kv)));
         }
-
         iterator upper_bound(const key_type& Kv) {
             return (iterator(Ubound(Kv)));
         }
-
         const_iterator upper_bound(const key_type&Kv) const{
             return (const_iterator(Ubound(Kv)));
         }
-
         Pairii equal_range(const key_type& Kv){
             return (Pairii(lower_bound(Kv), upper_bound(Kv)));
         }
@@ -670,7 +586,6 @@ namespace ft {
             else
                 Lmost() = Head, Rmost() = Head;
         }
-
         Nodeptr Copy(Nodeptr X, Nodeptr P){
             Nodeptr R = Head;
             if (!Isnil(X)){
@@ -696,7 +611,7 @@ namespace ft {
                 }
             }
             return (R);
-        }
+        }//function Copy
 
         void Erase(Nodeptr X){
             for(Nodeptr Y = X; !Isnil(Y); X = Y){
@@ -706,7 +621,6 @@ namespace ft {
                 Freenode(X);
             }
         }
-
         void Init(){
             Head = Buynode(0, Black);
             Isnil(Head) = true;
@@ -714,7 +628,6 @@ namespace ft {
             Lmost() = Head, Rmost() = Head;
             Size = 0;
         }
-
         iterator Insert(bool Addleft, Nodeptr Y, const value_type& V){
             if (max_size() - 1 <= Size)
                 throw std::length_error("tree mao/set too long");
@@ -782,7 +695,7 @@ namespace ft {
             }
             Color(Root()) = Black;
             return (iterator(Z));
-        }
+        }//function Insert
 
         Nodeptr Lbound(const key_type& Kv) const{
             Nodeptr X = Root();
@@ -795,15 +708,12 @@ namespace ft {
             }
             return(Y);
         }
-
         Nodeptr& Lmost(){
             return (Left(Head));
         }
-
         Nodeptr& Lmost() const{
             return (Left(Head));
         }
-
         void Lrotate(Nodeptr X){
             Nodeptr Y = Right(X);
             Right(X) = Left(Y);
@@ -819,35 +729,28 @@ namespace ft {
             Left(Y) = X;
             Parent(X) = Y;
         }
-
         static Nodeptr Max(Nodeptr P){
             while (!Isnil(Right(P)))
                 P = Right(P);
             return (P);
         }
-
         static Nodeptr Min(Nodeptr P){
             while (!Isnil(Left(P)))
                 P = Left(P);
             return (P);
         }
-
         Nodeptr& Rmost(){
             return (Right(Head));
         }
-
         Nodeptr& Rmost() const{
             return (Right(Head));
         }
-
         Nodeptr& Root(){
             return (Parent(Head));
         }
-
         Nodeptr& Root() const {
             return (Parent(Head));
         }
-
         void Rrotate(Nodeptr X){
             Nodeptr Y = Left(X);
             Left(X) = Right(Y);
@@ -863,7 +766,6 @@ namespace ft {
             Right(Y) = X;
             Parent(X) = Y;
         }
-
         Nodeptr Ubound(const key_type& Kv) const{
             Nodeptr X = Root();
             Nodeptr Y = Head;
@@ -875,7 +777,6 @@ namespace ft {
             }
             return (Y);
         }
-
         Nodeptr Buynode(Nodeptr Parg, char Carg){
             Nodeptr S = this->Alnod.allocate(1, (void *)0);
             this->Alptr.construct(&Left(S), 0);
@@ -885,15 +786,12 @@ namespace ft {
             Isnil(S) = false;
             return (S);
         }
-
         void Consval(Tptr P, const value_type& V){
             this->Alval.construct(P, V);
         }
-
         void Destval(Tptr P){
             this->Alval.destroy(P);
         }
-
         void Freenode(Nodeptr S){
             this->Alptr.destroy(&Parent(S));
             this->Alptr.destroy(&Right(S));
@@ -903,8 +801,7 @@ namespace ft {
 
         Nodeptr Head;
         size_type Size;
-    };
-
-}
+    };//class tree
+}//namespace ft
 
 #endif /* _XTREE_H_ */

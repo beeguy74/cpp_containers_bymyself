@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.hpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/25 13:44:06 by tphung            #+#    #+#             */
+/*   Updated: 2022/11/25 13:57:17 by tphung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef _MAP_H_
 # define _MAP_H_
 
@@ -25,7 +37,6 @@ namespace ft{
         Pr  comp;
 
         class value_compare : public std::binary_function<value_type, value_type, bool> {
-            friend class Tmap_traits<K, T, Pr, Ax, Mfl>;
         public:
             bool operator()(const value_type& X, const value_type& Y) const{
                 return (comp(X.first, Y.first));
@@ -89,6 +100,6 @@ namespace ft{
     void swap(map<Key,T,Compare,Allocator>& lhs, map<Key,T,Compare,Allocator>& rhs){
         lhs.swap(rhs);
     }
-}
+}//namespace ft
 
 #endif

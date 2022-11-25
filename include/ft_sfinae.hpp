@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_sfinae.hpp                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/25 13:40:58 by tphung            #+#    #+#             */
+/*   Updated: 2022/11/25 13:41:12 by tphung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef _FT_SFINAE_H_
 # define _FT_SFINAE_H_
 
@@ -69,6 +81,6 @@ namespace ft {
     struct is_integral<unsigned long int> : public integral_constant<bool, true> {
         static const bool value = true;
     };
-}
+}//namespace ft
 
 #endif

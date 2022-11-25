@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   iterator_traits.hpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/25 13:40:14 by tphung            #+#    #+#             */
+/*   Updated: 2022/11/25 13:40:43 by tphung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #ifndef _ITERATOR_TRAITS_H_
 #define _ITERATOR_TRAITS_H_
 
@@ -62,7 +75,6 @@ namespace ft
         typedef RanIt iterator_type;
         reverse_iterator() : current(NULL) {};
         explicit reverse_iterator(RanIt x) : current(x) {};
-        // reverse_iterator(reverse_iterator const & src) :current(src.base()){};
         template<class U>
         reverse_iterator(const reverse_iterator<U> &x) : current(x.base()) {};
         ~reverse_iterator() {};
@@ -124,23 +136,9 @@ namespace ft
             return (Y.current - current);
         }
 
-
-        // Ptr                 operator->() const {
-        //     return &**this;
-        // };
-        // Myt operator*(D N){
-        //     current -= N;
-        //     return *this;
-        // }
-        // template<class Num>
-        // Myt		operator+(Num bias) const{return (Myt(current - bias));}
-        // Ref operator[](D n) const {
-        //     return *(*this + n);
-        // };
-		// Myt		operator-(D bias) {return current + bias;}
     protected:
         RanIt current;
-    };
+    };//class reverse_iterator
 
     template<class RanIt, class D> inline
     reverse_iterator<RanIt> operator*(D N, const reverse_iterator<RanIt>& Y){
@@ -154,29 +152,25 @@ namespace ft
     template <class IteratorLeft, class IteratorRight>
     typename reverse_iterator<IteratorLeft>::D operator-(
         const reverse_iterator<IteratorLeft>& lhs,
-        const reverse_iterator<IteratorRight>& rhs)
-    {
+        const reverse_iterator<IteratorRight>& rhs){
         return rhs.base() - lhs.base();
     }
     template <class Iterator>
     reverse_iterator<Iterator> operator+(
         typename reverse_iterator<Iterator>::D n,
-        const reverse_iterator<Iterator>& lhs)
-    {
+        const reverse_iterator<Iterator>& lhs){
         return reverse_iterator<Iterator> (lhs.base() - n);
     }
     template <class IteratorLeft, class IteratorRight>
     bool    operator==(
         const reverse_iterator<IteratorLeft> & lhs,
-        const reverse_iterator<IteratorRight> & rhs)
-    {
+        const reverse_iterator<IteratorRight> & rhs){
         return (lhs.base() == rhs.base());
     }
     template <class IteratorLeft, class IteratorRight>
     bool    operator!=(
         const reverse_iterator<IteratorLeft> & lhs,
-        const reverse_iterator<IteratorRight> & rhs)
-    {
+        const reverse_iterator<IteratorRight> & rhs){
         return !(lhs == rhs);
     }
     template<class RanIt, class RanItRight> inline
@@ -195,11 +189,6 @@ namespace ft
     bool    operator>=(const reverse_iterator<RanIt>& X, const reverse_iterator<RanItRight>& Y){
         return !(Y.base() < X.base());
     }
-
-}
-
-
-
-
+}//namespace ft
 
 #endif
