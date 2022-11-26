@@ -6,7 +6,7 @@
 /*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:14:38 by tphung            #+#    #+#             */
-/*   Updated: 2022/11/25 21:41:12 by tphung           ###   ########.fr       */
+/*   Updated: 2022/11/26 12:29:05 by tphung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,17 @@ void insert(ft::map<char, int> &my, std::map<char, int> &st, std::string &messag
         st.insert(std::pair<char,int>(message[i],i));
     }
     compare_map(my, st, as);
+    my.print_tree();
 
     as = "insert by iterators";
-    my.insert(my.begin(),ft::pair<char,int>(message[0] + 'z', 'z'));
-    st.insert(st.begin(), std::pair<char,int>(message[0] + 'z', 'z'));
+    my.insert(my.begin(), ft::pair<char,int>('\"', 111));
+    st.insert(st.begin(), std::pair<char,int>('\"', 111));
+    my.insert(my.begin(), ft::pair<char,int>('=', 222));
+    st.insert(st.begin(), std::pair<char,int>('=', 222));
+    my.insert(my.begin(), ft::pair<char,int>('{', 333));
+    st.insert(st.begin(), std::pair<char,int>('{', 333));
     compare_map(my, st, as);
+    my.print_tree();
 
     as = "insert by range";
     std::map<char,int> st_another;

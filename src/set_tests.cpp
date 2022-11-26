@@ -6,7 +6,7 @@
 /*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:14:38 by tphung            #+#    #+#             */
-/*   Updated: 2022/11/25 21:53:04 by tphung           ###   ########.fr       */
+/*   Updated: 2022/11/26 12:12:20 by tphung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,17 @@ void insert(ft::set<char> &my, std::set<char> &st, std::string &message){
         st.insert(message[i]);
     }
     compare_set(my, st, as);
+    my.print_tree();
 
     as = "insert by iterators";
-    my.insert(my.begin(), message[0] + 'z');
-    st.insert(st.begin(), message[0] + 'z');
+    my.insert(my.begin(), '\"');
+    st.insert(st.begin(), '\"');
+    my.insert(my.begin(), '=');
+    st.insert(st.begin(), '=');
+    my.insert(my.begin(), '{');
+    st.insert(st.begin(), '{');
     compare_set(my, st, as);
+    my.print_tree();
 
     as = "insert by range";
     std::set<char> st_another;

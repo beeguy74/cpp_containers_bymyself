@@ -6,7 +6,7 @@
 /*   By: tphung <tphung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:48:10 by tphung            #+#    #+#             */
-/*   Updated: 2022/11/25 13:57:23 by tphung           ###   ########.fr       */
+/*   Updated: 2022/11/26 11:23:52 by tphung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,6 +279,10 @@ namespace ft {
             }
             return (*this);
         }
+        void print_tree(){
+            print_T(Root(), 0);
+        }
+
         iterator begin(){
             return(iterator(Lmost()));
         }
@@ -576,6 +580,22 @@ namespace ft {
             }
         }
     protected:
+        void print_T(Nodeptr root, int space){
+        if (Isnil(root))
+            return;
+        space += 2;
+        print_T(Right(root), space);
+        for (int i = 2; i < space; i++)
+            std::cout<<"\t";
+        if (Color(root) == Black)
+            std::cout << "\033[1;32m";
+        else
+            std::cout << "\033[1;31m";
+        std::cout << Key(root) <<"\n";
+        std::cout << "\033[0m";
+        print_T(Left(root), space);
+        }
+
         void Copy(const Myt& X){
             Root() = Copy(X.Root(), Head);
             Size = X.size();
